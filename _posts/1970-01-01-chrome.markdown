@@ -1,0 +1,18 @@
+---
+layout: post
+title:  "Chrome"
+date:   2014-10-03 20:59:15
+categories: public
+---
+
+### Easy search in JIRA
+
+Create following search engine entries in Chrome:
+
+* `JIRA ABC Search` - `abc` - `https:/jira.mycompany.com/browse/ABC-%s`
+* `JIRA DEF Search` - `def` - `https:/jira.mycompany.com/browse/DEF-%s`
+* `JIRA Issue Search` - `jira` - `https:/jira.mycompany.com/browse/%s`
+* `JIRA Text Search` - `jiratext` - `https:/jira.mycompany.com/issues?jql=text~"%s"`
+
+For example, type "abc" in the address box and press `TAB`. Then type your issue number and press enter.
+You will be in that issue.

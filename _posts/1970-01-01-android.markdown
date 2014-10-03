@@ -1,0 +1,13 @@
+---
+layout: post
+title:  "Android"
+date:   2014-10-03 20:45:15
+categories: public
+---
+
+### Flat UI
+Using library <https://github.com/eluleci/FlatUI>
+
+Attrs for the components : <https://github.com/eluleci/FlatUI/blob/master/library/src/main/res/values/attrs.xml>
+
+Showcase code : <https://github.com/eluleci/FlatUI/blob/master/sample/src/main/res/layout/activity_main.xml>

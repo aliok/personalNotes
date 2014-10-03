@@ -2,7 +2,7 @@
 layout: post
 title:  "Glassfish Notes"
 date:   2014-10-03 11:59:15
-categories: public glassfish
+categories: public
 ---
 
 ## JVM Crash

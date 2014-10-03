@@ -1,0 +1,11 @@
+---
+layout: post
+title:  "SQL"
+date:   2014-10-03 20:59:15
+categories: public
+---
+
+#### Disabling foreign key checks on MySql
+Disable using `SET FOREIGN_KEY_CHECKS=0;`.
+
+Enable using `SET FOREIGN_KEY_CHECKS=1;`.
