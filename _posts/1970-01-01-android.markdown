@@ -11,3 +11,13 @@ Using library <https://github.com/eluleci/FlatUI>
 Attrs for the components : <https://github.com/eluleci/FlatUI/blob/master/library/src/main/res/values/attrs.xml>
 
 Showcase code : <https://github.com/eluleci/FlatUI/blob/master/sample/src/main/res/layout/activity_main.xml>
+
+### Google Cloud Messaging (GCM)
+
+To send a message to device, execute following in command line:
+
+{% highlight bash %}
+api_key=AI....               >> Change it
+device_id=AP......d6U-E      >> Change it
+curl --header "Authorization: key=$api_key" --header Content-Type:"application/json" https://android.googleapis.com/gcm/send  -d "{\"registration_ids\":[\"$device_id\"]}"
+{% endhighlight %}

@@ -1,0 +1,17 @@
+---
+layout: post
+title:  "REST"
+date:   2014-10-03 20:59:15
+categories: public
+---
+
+### Consuming a RESTful web service in Java/Android
+<https://spring.io/guides/gs/consuming-rest/>
+
+### Creating a REST web service
+<http://spring.io/guides/tutorials/rest/>
+
+<https://spring.io/guides/gs/rest-service/>
+
+<https://github.com/spring-guides/gs-rest-service/tree/master/complete>
+ 
