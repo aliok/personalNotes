@@ -4,7 +4,7 @@ email: aliok dOt apache DoT org
 description: > # this means to ignore newlines until "baseurl:"
   Check out my [website](http://www.aliok.com.tr)
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://personalNotes.aliok.com.tr" # the base hostname & protocol for your site
+url: "http://personalnotes.aliok.com.tr" # the base hostname & protocol for your site
 twitter_username: aliok_tr
 github_username:  aliok
 
