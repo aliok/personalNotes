@@ -1,4 +1,5 @@
 # taken from http://ixti.net/software/2013/01/28/using-jekyll-plugins-on-github-pages.html
+# use rake site:publish to push generated content into Github gh-pages branch
 
 require "rubygems"
 require "tmpdir"
