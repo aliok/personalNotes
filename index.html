@@ -7,8 +7,8 @@ layout: default
   <h1 class="page-heading">Posts</h1>
 
   <ul class="post-list">
-    {% for post in site.posts %}
-      {% if post.categories contains 'public' %}
+    {% assign sorted_posts = site.categories.public | sort: 'title', 'last' %}
+    {% for post in sorted_posts %}
       <li>
         <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
 
@@ -16,7 +16,6 @@ layout: default
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
         </h2>
       </li>
-      {% endif %}
     {% endfor %}
   </ul>
 
