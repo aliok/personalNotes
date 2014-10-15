@@ -264,7 +264,33 @@ Install Xcode from AppStore, otherwise IOS 6 simulator doesn't work.
 Install other tools
 ----------------------------------------------------------------------------------------------------------------------------------------
 
-### Chrome
+### Firefox - safe way
+Download Firefox. Don't DnD into applications. DnD into `~/Desktop/apps/noindex` twice with names  `Firefox-Auth.app` and `Firefox-Ninja.app`. 
+
+If you've already run any of these, then close it. Open profile manager : `~/Desktop/apps/noindex/Firefox-Auth.app/Contents/MacOS/firefox-bin -p`.
+Delete all profiles.
+ 
+Create 2 profiles : `Auth` and `Ninja` with folders `Users/ali/Desktop/app-data/firefox-auth-profile` and `Users/ali/Desktop/app-data/firefox-ninja-profile`.
+
+Open AppleScript Script Editor and paste this:
+
+`do shell script "/Users/ali/Desktop/apps/noindex/Firefox-Auth.app/Contents/MacOS/firefox-bin -P \"Auth\" -no-remote  > /dev/null 2>&1 &"`
+
+Save the script into `/Users/ali/Desktop/apps/` with the file format *Application* and name `firefox-auth.app`.
+
+Do the similar for creating another profile, namely "Ninja":
+
+`do shell script "/Users/ali/Desktop/apps/noindex/Firefox-Ninja.app/Contents/MacOS/firefox-bin -P \"Ninja\" -no-remote  > /dev/null 2>&1 &"`
+
+Save the script into `/Users/ali/Desktop/apps/` with the file format *Application* and name `firefox-ninja.app`.
+
+Change icons of both scripts. Change icon of "Firefox-Ninja.app" as well. Otherwise, they will look the same.
+
+Add `/Users/ali/Desktop/apps/noindex` to Spotlight's exclude list.
+
+Open both Firefox instances and disable cookies.
+
+### <s>Chrome</s> (I don't use it anymore)
 Download Chrome. Don't DnD into applications. DnD into `~/Desktop/apps/noindex` twice with names  `Google Chrome Auth.app` and `Google Chrome Ninja.app`.
 
 If you've already run any of these, then close it. Delete the following folder: `/Users/ali/Library/Application Support/Google/Chrome`
