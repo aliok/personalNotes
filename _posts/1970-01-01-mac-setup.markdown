@@ -232,7 +232,10 @@ Do this to start mysql on login : <http://www.greybeard.org/?page_id=59>:
 To use `-Xmx2048m` option you should copy the original `.vmoptions` file from `/Applications/IntelliJ IDEA.app/bin/idea.vmoptions` 
 to `~/Library/Preferences/IntelliJIdeaXX/idea.vmoptions`, then modify the `-Xmx` setting.
 
-Change `IntelliJ IDEA XXX.app/Contents/Info.plist` `JVMVersion` from `1.6*` to `1.7*`
+OLD approach : Change `IntelliJ IDEA XXX.app/Contents/Info.plist` `JVMVersion` from `1.6*` to `1.7*`
+I don't use this anymore as it breaks the application's signature.
+
+Instead, download a JDK bundled one. See <http://stackoverflow.com/a/26484162>
 
 Add following lines to `/Users/ali/Desktop/devl-tools/IntelliJ IDEA 13.app/bin/idea.properties`:
 
