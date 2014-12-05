@@ -202,3 +202,45 @@ pre {
         }
     }
 }
+
+
+/** Based from Bootstrap dl-horizontal **/
+dl {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+dt, dd {
+    line-height: 1.5;
+}
+
+dt {
+    float: left;
+    width: 160px;
+    overflow: hidden;
+    clear: left;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+dd {
+    margin-left: 180px;
+}
+
+@include media-query($on-palm) {
+    dt {
+        float: initial;
+        width: initial;
+        overflow: initial;
+        clear: initial;
+        text-align: initial;
+        text-overflow: initial;
+        white-space: initial;
+    }
+
+    dd {
+        margin-left: initial;
+    }
+}
