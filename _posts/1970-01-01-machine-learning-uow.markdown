@@ -10,9 +10,9 @@ categories: public
 * Machine learning algorithms are combination of different components. Just learn the components!
 
 * Every machine learning algorithm has three components:
-** Representation
-** Evaluation
-** Optimization : depends on evaluation and representation
+  * Representation
+  * Evaluation
+  * Optimization : depends on evaluation and representation
 
 # Representation examples
 
@@ -110,11 +110,28 @@ reinforcement learning
 
 # Supervised learning = Inductive learning
  
-* Given examples of a function (X, F(X)) : X-> input, F(x)-> output
-* Predict function F(X) for new examples X
-** Discrete F(X): Classification
-** Continuous F(X): Regression
-** If F(X) is probability(X) : Probability estimation. Regression with outcomes that add up to 1
+* Given examples of a function `(x, f(x))` : `x`-> input, `f(x)`-> output
+* Predict function `f(x)` for new examples X
+  * Discrete `f(x)`: Classification
+  * Continuous `f(x)`: Regression
+  * If `f(x)` is `probability(X)` : Probability estimation. Regression with outcomes that add up to 1
+
+#### Examples:
+* Credit risk assessment
+  * `x`    : properties of customer and proposed purchase
+  * `f(x)` : approve purchase or not
+
+#### Appropriate situations
+* No human expert: 
+  * predicting binding strength of new molecule to AIDS protease molecule
+* Humans can perform the task, but can't describe how
+  * hand writing recognition
+* Desired function is changing frequently
+  * stock predictions
+* Each user needs a customized function `f`
+  * spam classification, book recommendation
+ 
+
 
 
 
