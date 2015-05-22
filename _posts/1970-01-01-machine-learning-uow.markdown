@@ -7,6 +7,44 @@ categories: public
 
 <https://class.coursera.org/machlearning-001>
 
+Terminology:
+===============================================================================================
+training example
+: An input-output pair `<x, f(x)>`
+
+Target function / target concept
+: true function we want to learn `f`. this is not accessible.
+
+Hypothesis
+: Proposed function `h` believed to be similar to `f`. Candidate function
+
+Concept
+: A boolean function. If hypothesis is boolean.
+ 
+Positive example / positive instance
+: Examples for which `f(x)=1` are called
+
+Classifier
+: Discrete-valued function. Like a spam filter that says "this is spam" and "this is not spam".
+
+Class / class label / label
+: Possible values `f(x)` in `{1,....,K}`
+
+Hypothesis space
+: Spaces of all hypotheses that can be output by a learning algorithm.
+ 
+Version space
+: Space of all hypotheses that have not yet been ruled out by a training example. Subset of the hypothesis space. Shrinks when finding new examples.
+ 
+Overfitting
+: My current model/algorithm is matching perfectly. But, what can I do to optimize accuracy on future data points?
+: Accuracy I want is not on training data, but on test data. 
+
+
+ 
+Introduction
+===============================================================================================
+
 * Machine learning algorithms are combination of different components. Just learn the components!
 
 * Every machine learning algorithm has three components:
@@ -108,7 +146,8 @@ reinforcement learning
 * Go step #0
 
 
-# Supervised learning = Inductive learning
+Supervised learning = Inductive learning
+===============================================================================================================
  
 * Given examples of a function `(x, f(x))` : `x`-> input, `f(x)`-> output
 * Predict function `f(x)` for new examples X
@@ -132,6 +171,12 @@ reinforcement learning
   * spam classification, book recommendation
  
 
+#### Hypothesis spaces
+* Complete ignorance: We know nothing or very little about the output. 
+  * e.g. a boolean function that we only know 2 input-output pairs but there are 4 parameters which means we complete input-output pairs would be 2^4=16
+* Simple rules: easy conjunction functions 
+* m-of-n rules: if m of n rules are true, then we have our rule.
+  * like a medical diagnosis system. one might not have some symptoms.
 
 
 
@@ -148,4 +193,19 @@ reinforcement learning
 
 
 
+<style>
+/** Some special overrides for this page **/
+    blockquote{
+        color: inherit;
+        font-style: inherit;
+        letter-spacing:inherit;
+    }
 
+    dt{
+        width: 250px;
+    }
+
+    dd{
+        margin-left: 270px;
+    }
+</style>
