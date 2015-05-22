@@ -351,32 +351,6 @@ After preprocessing, we have a clean text. Here are some methods of different ap
     - 2001
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <style>
 /** Some special overrides for this page **/
     blockquote{
