@@ -183,19 +183,52 @@ Supervised learning = Inductive learning
 
 Decision trees
 ==========================================================================================
+* Hypothesis space:
+  * Variable size: Size of the tree grows with the amount of data we have   
+  * Deterministic: For each example you're positive or negative
+  * Discrete and continuous parameters: Discrete params are choices. Continuous params would be sth like probabilities.
+* In X-Y 2 dimensional space: decision trees can't match a line. It outputs small rectangles. Or in 3D, it outputs small cubes.
 
+#### Building a decision tree
+* Start with most important feature
+* Then you have a left tree and right tree
+* Then pick the next most important feature on left tree
+* Then pick the next most important feature on right tree
+* Recurse ...
+* Selecting the most important feature
+  * Simplest way to find out is pick the attribute that has lowest error rate when used alone.
+  * Another method is picking the one that has best information gain (entropy)
 
+##### Entropy
+* Surprise, `S(V=v)` of each value of V defined to be 
+    `S(V=v) = -lg P(V=v)` where `P` is a probability distribution. 
+* Entropy = average surprise. Measure of uncertainty.
+  * A fair coin has higher entropy than a cheating one. You're always surprised when both possibilities are equal.
 
+##### Non-boolean functions
+* Construct a multiway split:
+    
+        ROOT
+       / |  \
+      A  B  C
 
+* Test for one versus all others:
 
+           ROOT
+         /      \
+        A       !A
+       / \      / \
+      B  !B    B   !B
 
+* Group the values into two disjoint subsets:
 
+           ROOT
+         /      \
+       A or B   C or D
+       
+       
 
-
-
-
-
-
+       
 <style>
 /** Some special overrides for this page **/
 @include media-query($on-laptop) {
