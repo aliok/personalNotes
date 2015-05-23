@@ -353,6 +353,7 @@ After preprocessing, we have a clean text. Here are some methods of different ap
 
 <style>
 /** Some special overrides for this page **/
+@include media-query($on-laptop) {
     blockquote{
         color: inherit;
         font-style: inherit;
@@ -366,4 +367,5 @@ After preprocessing, we have a clean text. Here are some methods of different ap
     dd{
         margin-left: 270px;
     }
+}
 </style>

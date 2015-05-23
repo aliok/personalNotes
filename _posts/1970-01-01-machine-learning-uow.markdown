@@ -181,6 +181,9 @@ Supervised learning = Inductive learning
 
 
 
+Decision trees
+==========================================================================================
+
 
 
 
@@ -195,6 +198,7 @@ Supervised learning = Inductive learning
 
 <style>
 /** Some special overrides for this page **/
+@include media-query($on-laptop) {
     blockquote{
         color: inherit;
         font-style: inherit;
@@ -208,4 +212,5 @@ Supervised learning = Inductive learning
     dd{
         margin-left: 270px;
     }
+}
 </style>
