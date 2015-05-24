@@ -226,8 +226,43 @@ Decision trees
          /      \
        A or B   C or D
        
-       
+##### Unknown attribute values
+Example: you have 2 types of attributes but attr#2 is only available on a small subset. What would you do?
 
+Different options:
+
+1. Assign most common value of attr#2 for missing ones.
+2. Assign most common value of attr#2 for missing ones for attr#1 value.
+3. Convert method #2 to a probability method. 
+       
+##### Overfitting
+Overfitting happens when the decision tree fits the training data perfectly but on test data it doesn't fit very good. 
+That means, I might have a bad answer for future tests.
+
+For example: my friend didn't want to play tennis on a very good weather because of other reasons that are not in my decision tree (e.g. being sick).
+Because of that example, I cannot claim that he doesn't want to play tennis on a good day.
+Usually very big trees overfits the training data.
+
+Avoiding:
+* Split data into training and test data
+* Having a small tree: grow full tree then post-prune (budamak). 
+  * How to select best tree:
+      * Measure performance over training data
+      * Measure performance over separate validation data set (separate from test set)
+      * Add complexity penalty to performance measure: e.g. increase in size of tree would result in a penalty
+  * How to do pruning:
+      * Prune the tree based on validation data
+      * 2 basic methods: reduced-error pruning and rule post-pruning 
+
+Cross validation: Split data into e.g. 10 subsets. Pick 1 as training and 9 as validation set. Then go to next round (select next set as training).
+ This would be a good idea if we have very small data. On big data, there is no need.
+ 
+##### Scaling:
+* ID3, CR.5     : random access
+* SPRINT, SLIQ  : multiple iterations
+* VFTP          : online (data stream) 
+       
+       
        
 <style>
 /** Some special overrides for this page **/
