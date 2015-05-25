@@ -145,6 +145,12 @@ reinforcement learning
 * Consolidating and deploying discovered knowledge: Use the model in reality.  
 * Go step #0
 
+# Search prodecures
+* Greedy search
+* Round-robin replacement
+* Backfitting
+* Beam search
+
 
 Supervised learning = Inductive learning
 ===============================================================================================================
@@ -244,6 +250,7 @@ Because of that example, I cannot claim that he doesn't want to play tennis on a
 Usually very big trees overfits the training data.
 
 Avoiding:
+
 * Split data into training and test data
 * Having a small tree: grow full tree then post-prune (budamak). 
   * How to select best tree:
@@ -262,7 +269,54 @@ Cross validation: Split data into e.g. 10 subsets. Pick 1 as training and 9 as v
 * SPRINT, SLIQ  : multiple iterations
 * VFTP          : online (data stream) 
        
-       
+
+Rule based learning
+===============================================================================================================
+Hypothesis space:
+
+* Each rule is a conjunction of tests
+* A rule set is disjunction of rules. e.g. all rules are for one class (e.g. 1 if one rule matches, 0 if none matches) 
+
+Rule sets vs decision trees:
+
+* They can be converted to each other. But converting rule sets to decision trees might end up in huge treees because you need to replicate tests.
+* It is easier to overfit with rule learning than decision tree learning.  
+
+* Typical search procedure employed is beam search, not plain greedy search.
+
+* Learning rules for multiple classes: Do learning for classes one by one.
+    Two possible way to figure out the class of an example:
+    * Order rules (decision lists)
+    * Weighted vote (e.g., weight = accuracy x coverage)
+
+#### Learning First-Order Rules
+Propositional representation: Just booleans
+First order logic : Functions, predicates etc. which are like programming
+
+* Can learn set of rules such as:
+    * Ancestor(x,y) <-- Parent(x,y)  (base case)
+    * Ancestor(x,y) <-- Parent(x,z) and Ancestor (z,y)
+        * x is y's ancestor, if there is a z which x is the parent of it and z is
+          an ancestor of y
+          
+* Instead of having rules only for the object, we have rules for the related objects as well
+
+#### FOIL : First-Order Inductive Learner
+
+* Relations etc. --> can be modeled as DB tables
+* Rules can be made from relations
+
+
+
+General stuff
+==================================================================================================================
+
+#### Probability estimates from small samples
+
+* Need smoothing. Two of the possible methods:
+    * Laplace estimate
+    * General prior estimate
+
        
 <style>
 /** Some special overrides for this page **/
