@@ -306,7 +306,117 @@ First order logic : Functions, predicates etc. which are like programming
 * Relations etc. --> can be modeled as DB tables
 * Rules can be made from relations
 
+#### Induction as Inverted Deduction
 
+* Classical deduction example: Socrates is a man; all men are mortal; thus Socrates is mortal.
+* Classical induction example: Socrates is a man; Socrates is mortal; XYZ is a man; XYZ is mortal. Then maybe all men are mortal.
+* Deduction vs induction: Go to specific from general vs go to general from specific examples
+
+
+Instance based learning
+==================================================================================================================
+* K-nearest neighbor
+* Other forms of IBL
+* Collaborative filtering
+
+* Instance-based learning
+  * Just store all training examples
+  * Nearest neighbor: When we have a new instance, scan thru the training examples and find the closest to that one
+  * k-nearest neighbor: Find k closest. Each one has a class and they vote (or averaged, or meaned, or weighted-averaged, etc.).
+  
+* Advantages:
+  * Training is very fast
+  * Learn complex target functions easily: Once you find neighbors, you implicitly find complex functions 
+  * Don't lose information
+
+* Disadvantages:
+  * Slow query time. And it goes worse with more data.
+  * Lots of storage <-- stores all training examples
+  * Easily fooled by irrelevant attributes. But e.g. decision trees find the relevant attributes. 
+
+* Distance measures: How do I define closest? (similarity measure)
+  * Numeric features: 
+    * Euclidian(straight line distance), Manhattan(sum of the distances), L^n-norm(more advanced version of square root distance)
+    * Normalized by: range, std. deviation 
+  * Symbolic features (for boolean features):
+    * Hamming/overlap: for each feature number of same features
+    * Value difference measure(VDM): I have 3 colors RGB. What could possibly make R more similar to G or B? But think about classification. a bit complicated. TBD 
+  * In general:
+    * Arbitrary, encode knowledge
+    
+* Voronoi diagram: TBD
+* Voronoi cell of x in training set:
+  * All points closer to x to any other instance in training set. That means, when we have an instance to test which lies in that cell, class will be that cell's class (x's class).
+  * Region of class C: Union of Voronoi cells of instances of class C in training set
+
+
+* Distance-weighed k-nearest neighbors (k-NN):
+  * Closest one has more weight
+  * Then, let's use all examples instead of k-closest ones: but it is faster to work on k instances.
+
+* Curse of dimensionality:
+  * second biggest problem after overfitting
+  * applies everywhere (decision trees, k-NN, etc.)
+  * problems:
+    * nearest neighbor is easily misled when hi-dim:  
+    * easy problems are hard in hi-dim:  
+    * low-dim intuitions don't apply in hi-dim: hard to understand in hi-dim
+    * e.g. normal distribution:
+      * in 1d, most of the mass is around mean
+      * in 2d, still some data is around mean
+      * but it gets less and less... 
+      * hi-dim: most of the mass is far away from the mean.
+    * e.g. points on hypergrid: similarity, classes and nearest neighbors become meaningless
+      * 1d: equal length lines, 2 nearest neighbors
+      * 2d: 2d grid. 4 nearest neighbors
+      * Nd: 2*N nearest neighbors.
+
+* Dealing with curse of dimensionality: get rid of some dimensions. called *feature selection* 
+  * Filter approach: linear operation that removes features. Very efficient.
+    * e.g. by information gain 
+  * Wrapper approach: run learner with different combinations of features
+    * forward selection
+    * backward elimination
+    * etc.
+    
+* Forward selection
+  * Start with empty set of features and add useful ones one by one
+  * When to stop: all features are in the set or adding a new feature doesn't make the accuracy better
+  * More efficient than backward elimination but there are disadvantages as well
+* Backward elimination
+  * Start with all features and remove useless ones one by one 
+
+* How to decide if a feature is useful or not:
+  * how to not remove 100 less useful features when we have 1 very useful feature? 100 of them would make a big difference.
+  * *feature weighting* to the rescue!
+    * Gradient descent is used for weighting the features. What weights give minimum error? 
+
+* k-NN is said above that it needs all training instances. But that is costly. What to do for reducing computational cost?
+  * Efficient retrieval:
+    * come up with a good data structure that allows fast retrievel
+    * e.g. k-D trees: good with low-dim 
+  * Efficient similarity comparison: use cheap approximation to get rid of most of the instances and then do expensive measures on remainder
+  * Form prototypes: Come up with prototypes for instances that cover them. Do not deal with details.
+  * Edited k-NN: get rid of instances that do not change frontier (e.g. line between clusters). 
+    * This is actually SVM.
+    * Doesn't work good on hi-dim as most of the instances are very close to frontiers.
+
+TODO:
+* UWO MachLearning course
+* Stanford MachLearning course
+* Book: Algorithms of the Intelligent Web
+* Book: Lucene
+* Book: Lucene - SOLR, similar
+* Book: Hadoop
+* Book: Mahout
+* Book: Apache Spark, MLib
+* Try every single algorithm on Spark MLib
+* Book: Apache OpenNLP
+* Book: Scala
+* Titanic example with Spark
+* Other Kaggle projects
+
+ 
 
 General stuff
 ==================================================================================================================
