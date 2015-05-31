@@ -400,6 +400,48 @@ Instance based learning
   * Edited k-NN: get rid of instances that do not change frontier (e.g. line between clusters). 
     * This is actually SVM.
     * Doesn't work good on hi-dim as most of the instances are very close to frontiers.
+    * Then let's do forward selection: e.g. bring instances one by one. if instance is classified by other examples already, ignore it.
+     
+* Avoiding overfitting in k-NN:
+  * simplest overfitting control parameter: k
+    * big k: overfitting
+    * finding best value of k: increase k on validation data (cross validation)
+  * form prototypes - similar to above.
+    * have big clusters --> less overfit
+  * remove noisy instances
+    * e.g. if all nearest neighbors have the same class different than the instance, then it is noise
+    * more sophisticated ways are available - of course
+    
+#### Some types of instance based learning
+* Locally weighted regression:
+  * Don't do linear regression in advance
+  * Do linear regression on nearest neighbors of new instance
+  * Very cheap linear regression
+  * This actually means we do piece-wise linear approximation to the curve (real function)
+  * It will be slow on query time but not that slow since we do linear regression on k instances instead of millions
+  * Quadratic or higher order regression is also possible
+  
+* Radial basis function networks
+  * Global approximation to target function, in terms of linear combination of local approximations
+  * Similar to locally weighted regression but eager instead of lazy
+  * A different kind of neural network
+    
+* Case-based reasoning: a completely different instance based learning algorithm
+  * Similar to help desks: this much RAM, this OS, ethernet connected; then the reason of the problem is XYZ
+  * Distance measure: match qualitative function descriptions
+  
+* Collaborative filtering: AKA recommender systems
+  * Predict if someone will like a website, movie etc.
+  * Old approach: look at content of the website, movie etc. (is this an action movie etc.)
+  * Collaborative filtering method:
+    * Look at what similar users liked
+    * Similar users == people with similar likes and dislikes
+    * Rating prediction - parameters: (for movie M) 
+      * user's average rating to movies
+      * nearest neighbors' rating on M
+      * nearest neighbors' average rating to movies
+      * similarity to nearest neighbor --> this is calculated as *Pearson coefficient*
+      * normalization
 
 TODO:
 * UWO MachLearning course
@@ -426,6 +468,15 @@ General stuff
 * Need smoothing. Two of the possible methods:
     * Laplace estimate
     * General prior estimate
+
+#### Lazy methods
+Wait for query before generalizing:
+* k-NN, case-based reasoning
+
+#### Eager methods
+Generalize before seeing query:
+* ID3, FOIL, naive bayes, neural networks
+
 
        
 <style>
