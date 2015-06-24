@@ -443,7 +443,48 @@ Instance based learning
       * similarity to nearest neighbor --> this is calculated as *Pearson coefficient*
       * normalization
 
+Statistical learning
+==================================================================================================================
+
+#### Bayesian learning
+
+* Bayes' theorem: 
+  
+    P(h|D) = P(D|h) P(h)
+             -----------
+                P(D)
+
+  P(h)
+  : prior probability of hypothesis h (e.g. you have cancer). 
+  
+  P(D)
+  : prior prob of training data D (e.g. just previous experience = data)
+  
+  P(h|D)
+  : prob of h given D
+  
+  P(D|h)
+  : prob of D given h
+  
+  
+
+
+#### MAP learners
+
+#### Bayes optimal classifier
+
+#### Naive Bayes learner
+
+#### Example: text classification
+
+#### Bayesian networks
+
+#### EM learning
+
+
+
 TODO:
+
 * UWO MachLearning course
 * Stanford MachLearning course
 * Book: Algorithms of the Intelligent Web
