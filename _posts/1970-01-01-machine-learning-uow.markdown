@@ -38,8 +38,8 @@ Version space
  
 Overfitting
 : My current model/algorithm is matching perfectly. But, what can I do to optimize accuracy on future data points?
-: Accuracy I want is not on training data, but on test data. 
-
+: Accuracy I want is not on training data, but on test data.
+ 
 
  
 Introduction
@@ -450,9 +450,9 @@ Statistical learning
 
 * Bayes' theorem: 
   
-    P(h|D) = P(D|h) P(h)
-             -----------
-                P(D)
+    P(h|D) = P(D|h) P(h)  /  P(D) 
+             
+                
 
   P(h)
   : prior probability of hypothesis h (e.g. you have cancer). 
@@ -465,22 +465,88 @@ Statistical learning
   
   P(D|h)
   : prob of D given h
-  
-  
 
+  
 
 #### MAP learners
 
+  Maximum a priori
+  : How much you believe in your hypothesis before you see any data?
+
+  Maximum a posteriori
+  : (MAP) How well your hypothesis go with the data? Pick the maximum matching one.                       
+
+
+* Brute force MAP Hypothesis Learners:
+  * Calculate the posterior probability of all Hs and pick the one that has highest posterior probability
+  * Suffers from overfitting. To overcome that, one can make use of priori knowledge.
+
+
 #### Bayes optimal classifier
+
+* What happens when we received a new example to classify? 
+  * Given I have 3 hypotheses with p's 0.4, 0.3 and 0.3
+  * Tests against the h's are +,- and -
+  * MAP Hypothesis says it is +, but probability of -'s are more
+  * Correct class is -
+* Bayes optimal classification is aware of this problem.
+  * Test every hypothesis one by one and then basically find the most voted class. 
+  * However, Bayes optimal classifiers are not practical at all because it requires too much computational power
+
+* Gibbs Classifier
+  * Pick a random hypothesis but more likely hypotheses should have more probability to be picked
+  * Use that to classify the instance
+  * In worst case, has 2x error rate of the Bayes optimal classifier 
+
 
 #### Naive Bayes learner
 
+* Very very naive thing. Just compute the product of the probabilities of (testExample|classValues). Pick the class that
+  has max value.
+* It just works very well as a classifier. Assumes things are independent, thus random
+  * The output probability value cannot be trusted. It is unrealistically close to 1 or 0.
+  * Basically, it just says, "here is the class that has the highest probability."
+* What if one test example is not seen before? Multiplication with 0 will kill the product.
+  * Use one of the smoothing techniques. Such as m-estimate
+  
+
 #### Example: text classification
+
+* Plain old naive bayes learner reaches very high success rates. 
+  * Examples: text being interesting or not, email being spam or not, text blongs to what news group
+
 
 #### Bayesian networks
 
+* Naive Bayes learners have big assumptions like things are independent
+* Bayesian networks are developed to overcome this problem
+  * Limited amount of dependencies are allowed
+  * Probability of something is basically just dependent on parents (think of a graph)
+* BTW, Bayesian networks are not just classifiers: it computes the conditional probability of any variables in it
+  * However, inference is NP-hard
+  * For that there are some methods like Monte Carlo methods
+* Learning Bayesian Networks
+  * Variants:
+    * Network structure is known or not
+    * Is there missing data or not
+  * If structure is known and there is no missing data, it is es easy as training a Naive Bayes classifier
+    * Then just look at the data and compute stuff
+  * If there are missing values, then EM is the way
+
+
 #### EM learning
 
+* EM: Expectation Maximization
+* A general algorithm; is not only applicable to Bayesian networks
+* Until convergence:
+  * Fill the network by doing inference and computing expected values
+  * Calculate new parameter values to maximize probability
+* It basically finds the local optima. But, sometimes local optima is not the global optima. Then you have a poor solution.
+  * Some notes for getting better results: 
+    * Selecting the starting point is very important. 
+    * Some people run the algorithm multiple times for different starting points.
+  * You never know if your model is the best one (if your local optima is a global one)
+  
 
 
 TODO:
@@ -504,6 +570,14 @@ TODO:
 General stuff
 ==================================================================================================================
 
+#### Some shared stuff
+
+Gaussian distribution
+: Normal distribution (the bell curve)
+
+
+
+
 #### Probability estimates from small samples
 
 * Need smoothing. Two of the possible methods:
@@ -517,6 +591,15 @@ Wait for query before generalizing:
 #### Eager methods
 Generalize before seeing query:
 * ID3, FOIL, naive bayes, neural networks
+
+#### Noise
+
+* When you believe the noise is Gaussian, then minimizing the sum of squared errors is a good way of 
+  evaluating hypotheses to find the best hypothesis (not sure if it only applies to linear functions) 
+
+#### Math
+
+* Never multiply probabilities. Log them and add them.
 
 
        
