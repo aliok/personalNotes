@@ -2,21 +2,38 @@
 layout: post
 title:  "Docker"
 date:   2014-10-03 20:45:15
-categories: private
+categories: public
 ---
-### attach shell to Docker
+Attach shell to Docker
+=======================
 
     eval $(docker-machine env)
 
 
-### run an image
+Run
+=======================
 
-    docker run --name=loving_heisenberg -it --rm=true aliok/unified_push_server
+    docker run --name=loving_heisenberg -it --rm=true aliok/something
 
-###  shell with user defined in Dockerfile
+Attach
+=======================
+
+Shell with user defined in Dockerfile:
 
     sudo docker exec -it loving_heisenberg /bin/bash
 
-###  shell with root
+shell with root:
 
     sudo docker exec -it -u 0 loving_heisenberg /bin/bash
+
+
+Remove
+=======================
+
+Delete all untagged images:
+
+    docker rmi $(docker images | grep "^<none>" | awk '{print $3}')
+
+Delete all unused images:
+
+    docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
