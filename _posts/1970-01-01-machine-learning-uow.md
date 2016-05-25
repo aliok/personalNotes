@@ -468,7 +468,7 @@ Statistical learning
 
   
 
-#### MAP learners
+#### MAP learners (optimal prediction)
 
   Maximum a priori
   : How much you believe in your hypothesis before you see any data?
@@ -538,6 +538,7 @@ Statistical learning
 
 * EM: Expectation Maximization
 * A general algorithm; is not only applicable to Bayesian networks
+* Solution for missing values in the training data
 * Until convergence:
   * Fill the network by doing inference and computing expected values
   * Calculate new parameter values to maximize probability
@@ -547,6 +548,86 @@ Statistical learning
     * Some people run the algorithm multiple times for different starting points.
   * You never know if your model is the best one (if your local optima is a global one)
   
+#### Learning Bayesian Network Structure
+
+* What happens when network structure is unknown?
+* Structure search:
+  * Start with an initial structure (empty network)
+  * Add edges whenever you see data
+  * ...
+  * Maximum likelihood: vulnerable to overfitting
+    * It will result in a completely connected network
+  * Instead, use a prior which prefers smaller networks (less edges)
+  * Or, draw the initial network manually if possible and then pass it to algorithm  
+
+  
+#### Structural EM algorithm
+
+* What if there is missing values in training data and the network structure is unknown?
+  * Naive idea: do EM and structure search at the same time.
+  * Not efficient at all.
+* Structural EM: Do the structure search inside the EM, not vice versa.
+  * Deep thing!
+
+
+Neural networks
+==================================================================================================================
+
+* Properties of a neural network:
+  * Many neuron-like threshold switching units
+  * Many weighted interconnections among units
+  * Highly parallel, distributed process
+  * Emphasis on tuning weights automatically: strength of connections tune automatically based on data
+
+
+#### Perceptrons
+
+* An old one.
+* Simulate single neuron
+  * x0 is always 1; it acts as a threshold
+* Cannot learn everything. 
+  * Can learn functions that have values linearly separable
+  * Cannot learn, e.g. XOR function
+
+* How to train a perceptron:
+  * Just like a neuron: when you see something, the link (synapse) gets strengthened
+  * However, it is error-driven. That means:
+    * Don't mess with weights when there is no error; namely perceptron output and target value is the same
+    * Do increase/decrease weights when there is an error
+    
+* Perceptron training rules:
+  * The learning rate must be sufficiently small. Too big: you learn to quick but wrong. Too small: you learn very slow.
+  * Training data must be linearly separable: **No noise allowed!** 
+  
+
+#### Gradient descent
+
+* Widely used
+* Finds the weights that minimizes the squared error 
+  * Take the steepest step that minimizes the squared error
+  * Go until the optimum: where all the neighbors increase the squared error
+
+* Difference from perceptron:
+  * Works with noise as well and even when the training data is not linearly separable
+  * There is no black-or-white; there is a continuous signal in terms of neuron output
+
+* Batch vs. incremental
+  * Batch: wait until all data is seen to update weights
+  * Incremental: update weights when an example is seen
+  * Similar to learning at night(batch) vs. learning during the day(incremental)
+  * Incremental is much faster.
+  * Incremental way doesn't guarantee the global optimum, can be stuck in a local optimum.
+
+#### Multilayer networks
+
+* 
+
+#### Backpropogation
+
+* Most popular algorithm for learning neural networks
+*
+
+
 
 
 TODO:
@@ -585,11 +666,15 @@ Gaussian distribution
     * General prior estimate
 
 #### Lazy methods
+
 Wait for query before generalizing:
+
 * k-NN, case-based reasoning
 
 #### Eager methods
+
 Generalize before seeing query:
+
 * ID3, FOIL, naive bayes, neural networks
 
 #### Noise
@@ -605,7 +690,7 @@ Generalize before seeing query:
        
 <style>
 /** Some special overrides for this page **/
-@include media-query($on-laptop) {
+@media screen and (min-width: 1900px) {
     blockquote{
         color: inherit;
         font-style: inherit;
@@ -613,11 +698,11 @@ Generalize before seeing query:
     }
 
     dt{
-        width: 250px;
+        width: 350px;
     }
 
     dd{
-        margin-left: 270px;
+        margin-left: 370px;
     }
 }
 </style>
