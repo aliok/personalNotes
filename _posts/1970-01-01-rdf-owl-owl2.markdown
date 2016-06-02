@@ -1,0 +1,231 @@
+---
+layout: post
+title:  "RDF, OWL, OWL2"
+date:   2016-06-01 20:45:15
+categories: public
+---
+Some OWL snippets:
+===================
+
+~~~ xml
+<rdf:RDF
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:p="http://example.org/pers-schema#">
+  <rdf:Description rdf:about="http://example.org/~jdoe#jane">
+    <p:knows rdf:resource="http://example.org/~jsmith#john" />
+    <p:name>Jane Doe</p:name>
+    <rdf:type
+         rdf:resource=”http://example.org/pers-schema#Person”/>
+  </rdf:Description>
+</rdf:RDF>
+~~~
+
+Describes Jane == http://example.org/~jdoe#jane.  
+Jane's name is Jane Doe. Jane is a person.
+Jane knows http://example.org/~jsmith#john.
+
+------------
+
+~~~ xml
+<rdf:RDF xml:base="http://example.org/~jdoe"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:p="http://example.org/pers-schema#">
+  <p:Person rdf:about="#jane">
+    <p:knows rdf:resource="http://example.org/~jsmith#john" />
+    <p:name>Jane Doe</p:name>
+  </p:Person>
+</rdf:RDF>
+~~~
+
+Represents the same info as previous but uses `base` attr and relative references.
+
+------------
+
+
+~~~ xml
+<!DOCTYPE rdf:RDF [<!ENTITY owl "http://www.w3.org/2002/07/owl#">]>
+<rdf:RDF xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="">
+        <rdfs:label>My Ontology</rdfs:label>
+        <rdfs:comment>An example ontology</rdfs:comment>
+    </owl:Ontology>
+
+    <owl:Class rdf:ID="Person"/>
+
+    <owl:Class rdf:ID="Man"/>
+        <rdfs:subClassOf rdf:resource="#Person"/>
+    </owl:Class>
+
+    <owl:ObjectProperty rdf:ID="hasChild"/>
+
+    <owl:ObjectProperty rdf:ID="hasDaughter">
+        <rdfs:subPropertyOf rdf:resource="#hasChild"/>
+    </owl:ObjectProperty>
+
+    <owl:DatatypeProperty rdf:ID="age"/>
+
+    <owl:ObjectProperty rdf:ID="isParentOf">
+        <owl:inverseOf rdf:resource="#isChildOf"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:ID="isTallerThan">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:ID="isFriendOf">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+    </owl:ObjectProperty>
+
+    <owl:ObjectProperty rdf:ID="hasSSN">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+    </owl:ObjectProperty>
+</rdf:RDF>
+~~~
+
+> Object properties specify relationships between pairs of resources.
+> Datatype properties, on the other hand, specify a relation between a resource and a data type value.
+>
+> ...owl:InverseFunctionalProperty specifies a property that can be used as a primary key.
+
+* Man is a Person.
+* hasDaughter is a subclass of hasChild.
+* ...
+* age: not an ObjectProperty. it is a data property.
+* isParentOf and isChildOf: if A isParentOf B --> B isChildOf A
+* isTallerThan: if A>B and B>C --> A>C
+* isFriendOf: if A♥B --> B♥A
+* hasSSN is both an owl:FunctionalProperty (because each person has at most one Social Security Number) and an owl:InverseFunctionalProperty (because a Social Security Number can be used to uniquely identify U.S. citizens).
+
+
+------------
+
+
+~~~ xml
+<p:Person rdf:about=”http://www.cse.lehigh.edu/~heflin/ ”>
+   <owl:sameAs
+         rdf:resource=”http://www.cs.umd.edu/~heflin/” />
+</p:Person>
+~~~
+
+They're the same thing.
+
+------------
+
+~~~ xml
+<owl:AllDifferent>
+   <owl:distinctMembers rdf:parseType=”Collection”>
+      <p:Person rdf:about=”#Bob” />
+      <p:Person rdf:about=”#Sue” />
+      <p:Person rdf:about=”#Mary” />
+      ...
+   </owl:distinctMembers>
+</owl:AllDifferent>
+~~~
+
+These are all different
+
+------------
+
+~~~ xml
+<owl:Class rdf:ID=”Father”>
+   <owl:intersectionOf rdf:parseType=”Collection”>
+      <owl:Class rdf:about=”#Parent” />
+      <owl:Class rdf:about=”#Male” />
+   </owl:intersectionOf>
+</owl:Class>
+~~~
+
+Father is a male and parent.
+Didn't use `subClassOf Parent && subClassOf Male` here since we want to show that
+someone is father just because of the gender and parenthood.
+Using subClassOf like that would mean all fathers must be parent and male. It doesn't mean
+fatherhood is gained with being a male and a parent.
+
+------------
+
+~~~ xml
+<owl:Class rdf:ID=”Man”>
+  <owl:intersectionOf rdf:parseType=”Collection”>
+    <owl:Class rdf:about=”#Person”>
+    <owl:Class>
+       <owl:complementOf rdf:resource=”#Woman” />
+    </owl:Class>
+  </owl:intersectionOf>
+<owl:Class>
+~~~
+
+Any person not woman are man. It is important to intersect with Person as well.
+Because, not a piece of bread is not a woman but not a man too.
+
+------------
+
+~~~ xml
+<owl:Class rdf:ID=”Band”>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+       <owl:onProperty rdf:resource=”#hasMember” />
+       <owl:allValuesFrom rdf:resource=”#Musician” />
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+~~~
+
+Band is a `subClassOf` the anonymous class defined by the restriction.
+The restriction says a band member must be a musician.
+
+Snippet above doesn't say though, a group of musicians is a band.
+
+------------
+
+~~~ xml
+<owl:Class rdf:ID=”Male”>
+    <owl:disjointWith rdf:resource=”#Female”>
+</owl:Class>
+~~~
+
+This is not the same with `complementOf`. `complementOf` would mean anything that is
+not male is female. A piece of wood is not male nor female!
+
+
+------------
+
+~~~ xml
+<owl:Class rdf:ID=”PrimaryColor”>
+    <owl:oneOf rdf:parseType=”Collection”>
+        <owl:Thing rdf:about=”#Red” />
+        <owl:Thing rdf:about=”#Blue” />
+        <owl:Thing rdf:about=”#Yellow” />
+   </owl:oneOf>
+</owl:Class>
+~~~
+
+Self explanatory...
+
+------------
+
+~~~ xml
+<owl:Ontology rdf:about="">
+  <rdfs:label>News Ontology, v. 2.0</rdfs:label>
+  <owl:imports
+          rdf:resource="http://example.org/onts/person" />
+  <owl:backwardCompatibleWith
+          rdf:resource=”http://example.org/onts/news-v10” />
+</owl:Ontology>
+~~~
+
+Imports person ontology.
+
+------------
+
+~~~ xml
+<p:Person rdf:about=”#Bob”>
+   <p:hasMom rdf:resource=”#Sue” />
+   <p:hasMom rdf:resource=”#Mary” />
+</p:Person>
+~~~
+
+OWL doesn't make unique names assumption. Statement above infers that Sue and
+Mary is the same person.
