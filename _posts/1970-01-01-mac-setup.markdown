@@ -20,15 +20,17 @@ Security
 * Go to Utilities > Firmware password
 
 ### Change root password
-sudo passwd
+
+    sudo passwd
 
 ### Remove access to home folder for other users and groups
-chmod -R g-r /Users/ali
-chmod -R g-w /Users/ali
-chmod -R g-x /Users/ali
-chmod -R o-r /Users/ali
-chmod -R o-w /Users/ali
-chmod -R o-x /Users/ali
+
+    chmod -R g-r /Users/ali
+    chmod -R g-w /Users/ali
+    chmod -R g-x /Users/ali
+    chmod -R o-r /Users/ali
+    chmod -R o-w /Users/ali
+    chmod -R o-x /Users/ali
 
 ### `umask` settings
 **This is reverted afterwards since it was causing system problems.**
