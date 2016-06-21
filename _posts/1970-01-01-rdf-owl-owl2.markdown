@@ -229,3 +229,77 @@ Imports person ontology.
 
 OWL doesn't make unique names assumption. Statement above infers that Sue and
 Mary is the same person.
+
+
+
+OWL/Ontology terms
+======================================
+
+From http://mowl-power.cs.man.ac.uk/protegeowltutorial/resources/ProtegeOWLTutorialP4_v1_3.pdf
+
+* Individuals, represent objects in the domain in which we are interested (e.g. Matt, US, Turkey, Fido, Fluffy)
+* OWL classes are interpreted as sets that contain individuals (e.g. country, person)
+* Properties are binary relations3 on individuals - i.e. properties link two individuals together (e.g. Matt livesIn Turkey, Matt hasPet Fluffy)
+* The word concept is sometimes used in place of class. Classes are a concrete representation of concepts.
+* A class hierarchy may also be called a taxonomy.
+* OWL Properties represent relationships. There are two main types of properties, Object properties and
+Datatype properties.
+  * Object properties are relationships between two individuals. (Matt hasSister Jane)
+  * Data properties: (Matt hasAge 31)
+  * OWL also has a third type of property – Annotation properties: can be used to add information (metadata — data about data) to classes, individuals and object/datatype properties. (JetEngine dc:creator Matthew Somebody)
+
+* property characteristics
+  *  Functional Properties:
+     * Functional properties are also known as single valued properties and also features. ()
+     * for a given individual, there can be at most one individual that is related to the individual via the property
+     * e.g. Jean hasBirthMother Margaret
+  * Inverse Functional Properties:
+    *  inverse property is functional
+    * e.g. isBirthMotherOf is inverse functional
+  * Transitive Properties
+    * If the individual Matthew has an ancestor that is Peter, and Peter has an ancestor that is William, then we can infer that Matthew has an ancestor that is William
+    * If a property is transitive then its inverse property should also be transitive.
+    * if a property is transitive then it cannot be functional
+  * Symmetric Properties
+    * Matt hasSibling Jane
+    * Jane hasSibling Matt
+  * Asymmetric properties
+    * Robert is a child of David, then David cannot be a child of Robert
+  * Reflexive properties
+    * A property P is said to be reflexive when the property must relate individual a to itself
+      * George knows George
+      * George knows Matt
+    * e.g. isBirthMotherOf cannot be reflexive
+  * Irreflexive properties
+    *  it can be described as a property that relates an individual a to individual b, where individual a and individual b are not the same
+    * e.g. isBirthMotherOf
+
+* Properties link individuals from the domain to individuals from the range.
+  * domain of the hasTopping property is Pizza
+  * range of the hasTopping property PizzaTopping (w/ subclass hierarchy)
+*  In general, domain for a property is the range for its inverse, and the range for a property is the domain for its inverse.
+
+* Property Restrictions
+  * Quantifier Restrictions
+    * existential restrictions
+      * by far the most common type of restrictions in OWL ontologies.
+      * Existential restrictions describe classes of individuals that participate in at least one relationship along a specified property to individuals that are members of a specified class.
+      * hasTopping some MozzarellaTopping: This restriction describes the class of individuals that have at least one topping that is Mozzarella.
+      * hasBase some PizzaBase: all of the individuals that have at least one pizza base
+    * universal restrictions
+      * Universal restrictions describe classes of individuals that for a given property only have relationships along this property to individuals that are members of a specified class.
+      * Individuals that are members of VegetarianPizza can only have toppings that are CheeseTopping or VegetableTopping.
+  * Cardinality Restrictions
+    * class of individuals that have at least, at most or exactly a specified number of relationships with other individuals or datatype values
+  * hasValue Restrictions
+    * they describe relationships between an individual and data values.
+
+
+* necessary conditions : Cheesy pizza is a pizza and it has cheese topping
+  * With necessary conditions alone, we cannot say that, "If something fulfills these conditions then it must be a member of this class"
+  * Primitive class: a class that only has necessary conditions
+  * Necessary conditions are called Superclasses in Protege
+* necessary and sufficient conditions :
+  * Cheesy pizza is a pizza and it has cheese topping and anything that is pizza and that has cheese topping is a cheesy pizza
+  * necessary and sufficient conditions are called Equivalent classes in Protege
+  * Defined Class: a class that has at least one set of necessary and sufficient conditions
