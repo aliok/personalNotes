@@ -8,10 +8,10 @@ categories: private
 This is how I set up my Mac. I took notes since I was a Mac newbie.
 
 
-----------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
 
 Security
-----------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
 
 ### Set up firmware password
 
@@ -23,7 +23,9 @@ Security
 
     sudo passwd
 
-### Remove access to home folder for other users and groups
+### Remove access to home folder for other users and groups (SKIPPED)
+
+**I skipped this since I will use FileVault now and there is only 1 user in the system.**
 
     chmod -R g-r /Users/ali
     chmod -R g-w /Users/ali
@@ -35,22 +37,27 @@ Security
 ### `umask` settings
 **This is reverted afterwards since it was causing system problems.**
 
-Change umask so that new created folders and files are not accessible by group or others. By default, Mac makes new files readable 
+Change umask so that new created folders and files are not accessible by group or others. By default, Mac makes new files readable
 by everyone, even if the parent folder of the file/folder is not like that.
 Add line `umask 077` to file `/etc/launchd.conf`.
 
+### FileVault
 
-----------------------------------------------------------------------------------------------------------------------------------------
+Enabled FileVault.
+
+Restarted machine.
+
+---------------------------------------------------------------------------------------
 
 Finder and UI
-----------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
 
 ### Show hidden files in Finder
 Execute command (case sensitive)
 
 `defaults write com.apple.finder AppleShowAllFiles -boolean true`
 
-Then to refresh Finder, execute 
+Then to refresh Finder, execute
 
 `killall Finder`
 
@@ -60,32 +67,43 @@ Then to refresh Finder, execute
 
 `killall Finder`
 
-### Get rid of Dashboard
+### Get rid of Dashboard (SKIPPED)
+
+Dashboard is deactivated by default with OSX Yosemite.
 
 `defaults write com.apple.dashboard mcx-disabled -boolean true`
 
 `kilall Dock`
 
 
-----------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
 
 Package management
-----------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
 
-Install Homebrew package manager. Instructions at: http://brew.sh
+Install Homebrew package manager.
+
+Install Cask.
 
 
 Homebrew stuff installed:
 
 {% highlight bash %}
-brew install wget
-brew install coreutils
-brew install dos2unix
-brew tap homebrew/science
-brew install gfortran
-brew install octave
-brew install nodejs
-brew install htop
+brew install wget git ruby
+
+# following has some post ops
+brew install coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt
+# add following lines to ~/.bash_profile
+# export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+# export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+# export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
+# export MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
+# export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
+# export MANPATH="/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
+# export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+# export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
+
+brew tap homebrew/dupes; brew install grep
 {% endhighlight %}
 
 {% highlight bash %}
@@ -100,67 +118,58 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 {% endhighlight %}
 
-----------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
 
 Setting environment variables
-----------------------------------------------------------------------------------------------------------------------------------------
-Need to add them in `/etc/launchd.conf`. That will work with GUI and console applications for all users.
+---------------------------------------------------------------------------------------
 
-For example: 
+Apple did a shitty job about environment variables.
+This is the right approach it seems:
+http://stackoverflow.com/questions/25385934/setting-environment-variables-via-launchd-conf-no-longer-works-in-os-x-yosemite?lq=1
 
-`setenv JAVE_HOME /path/to/java/home`
+For other versions, there are other instructions.
 
-You cannot reference other variables unfortunately. Following will not work:
+TBA more
 
-`setenv VAR2 $VAR1:/my/folder`
+---------------------------------------------------------------------------------------
 
-Need to hardcode all:
+Keyboard
+---------------------------------------------------------------------------------------
 
-`setenv VAR2 /folder/for/var1:/my/folder`
+### Super fast
+Make it super fast by following:
+http://apple.stackexchange.com/questions/10467/how-to-increase-keyboard-key-repeat-rate-on-os-x
 
-After doing this, check if env var is found:
-
-`grep -E "^setenv" /etc/launchd.conf | xargs -t -L 1 launchctl`
-
-`echo $VAR_NAME`
-
-Unfortunately, Mac 10.8+ doesn't allow overriding $PATH env var in `launchd.conf`, so following will have no effect:
-
-`setenv PATH /usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/my/application/bin`
-
-To add stuff to `PATH`which is used by console, add lines similar to following into `/etc/profile`:
-
-`export PATH=$PATH:/Users/ali/Desktop/devl-tools/apache-maven-2.2.1/bin/`
-
-Notes:
-
-* `environment.plist` does not work for applications launched via Spotlight.
-* `/etc/paths` - only works for console
-* `/etc/csh.cshrc` or `/etc/bashrc` - only for some shells
+    defaults write -g InitialKeyRepeat -int 10
+    defaults write -g KeyRepeat -int 0
 
 
-----------------------------------------------------------------------------------------------------------------------------------------
+### Accent menu
+Get rid of accent menu (shown when a key is held) . See <http://osxdaily.com/2011/08/04/enable-key-repeat-mac-os-x-lion/> .
+Run following and restart the apps.
+
+    defaults write -g ApplePressAndHoldEnabled -bool false
+
+
+### Custom layout:
+* Get the file: `MyBritish3.keylayout`
+* Copy it into `/Library/Keyboard Layouts/`
+* Add the custom layout from OsX Preferences->Keyboard.
+* Remove other keyboards
+* Set custom layout as the default one.
+* In El Capitan, it was also the default language in login screen
+
+
+---------------------------------------------------------------------------------------
 
 Install JDK
-----------------------------------------------------------------------------------------------------------------------------------------
-Install Java7 as Java6 is very hard to find. Also, the vendor for Java6 is Apple, not Sun/Oracle.
+---------------------------------------------------------------------------------------
 
-Download from <http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html>
-You will have a DMG file.
-Open the DMG and double click on the package. Install regularly.
+    brew cask install java
 
-It is installed into `/Library/Java/JavaVirtualMachines`
-Thus, you need to update your environment variables.
+This installs JDK 8.
 
-Add following into `/etc/launchd.conf`
-
-`setenv JAVA_HOME /Library/Java/JavaVirtualMachines/jdk1.7.0_67.jdk/Contents/Home`
-
-*[Following statement is necessary if java -version returns a different version]*
-
-Use following to set it on Apple's weird structure:
-
-`sudo ln -nsf /Library/Java/JavaVirtualMachines/jdk1.7.0_67.jdk/Contents /System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK`
+It is installed into `/Library/Java/JavaVirtualMachines/jdk1.8.0_92.jdk/Contents/Home`.
 
 Restart your machine. All of the following should point to new JDK:
 
@@ -168,254 +177,67 @@ Restart your machine. All of the following should point to new JDK:
 * `java -version`
 * `/usr/libexec/java_home`
 
-#### Set up JDK in IntelliJ
-
-* File -> Project structure -> SDKs
-* New JDK -> /Library/Java/JavaVirtualMachines/jdk1.7.0_67.jdk/Contents/Home
+TBD: Env var: use this link : `/Library/Java/Home`
 
 
-----------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
 
 Install developer tools
-----------------------------------------------------------------------------------------------------------------------------------------
-
-### Maven
-Add `M2_HOME` environment variable with value `/Users/ali/Desktop/devl-tools/apache-maven-3.2.3`.
-
-Add `mvn` to `PATH` in `/etc/launchd.conf/`:
-
-`setenv PATH "/usr/local/bin:.......:/Users/ali/Desktop/devl-tools/apache-maven-3.2.3/bin"`
-                     
-Create file `${user.home}/.m2/settings.xml` with [default content](http://maven.apache.org/settings.html).
-
-Add following in that file to relocate the repository:
-
-`<localRepository>/Users/ali/Desktop/devl-tool-data/maven-repo/</localRepository>`
-
-### Gradle
-Add `GRADLE_HOME` environment variable with value `/Users/ali/Desktop/devl-tools/gradle-2.1/bin`.
-
-
-### Mysql
-Download tarball and extract to `~/Desktop/devl-tools`
-
-Create a symbolic link : `ln -s mysql-5.5.xxxxxxx mysql`
-
-Copy `<MYSQL-FOLDER>/support-files/my-small.cnf` to `/etc/my.cnf` and change values:
-
-* `user            = ali`
-* `basedir         = /Users/ali/Desktop/devl-tools/mysql`
-* `datadir         = /Users/ali/Desktop/devl-tool-data/mysql-data`
- 
- 
-Add `mysql/bin` folder to `PATH`.
-
-Set up MySql data folder rights:
-
-{% highlight bash %}
-chmod -R 700 /Users/ali/Desktop/devl-tool-data/mysql-data
-chmod -R 700 /Users/ali/Desktop/devl-tools/mysql
-chmod 700 /Users/ali/Desktop/devl-tools/mysql
-cd ~/Desktop/devl-tools/mysql
-scripts/mysql_install_db --user=ali
-{% endhighlight %}
-
-Start mysql using `/Users/ali/Desktop/devl-tools/mysql/bin/mysqld_safe > /dev/null 2>&1 &`
-
-Shutdown using `mysqladmin -u root shutdown`
-
-Do this to start mysql on login : <http://www.greybeard.org/?page_id=59>:
-
-* modify the file, so there is only `--user=ali` argument
-* modify working dir etc.
-* `launchctl load ~/Library/LaunchAgents/com.mysql.mysqld.plist`
+---------------------------------------------------------------------------------------
 
 ### Intellij IDEA
-To use `-Xmx2048m` option you should copy the original `.vmoptions` file from `/Applications/IntelliJ IDEA.app/bin/idea.vmoptions` 
-to `~/Library/Preferences/IntelliJIdeaXX/idea.vmoptions`, then modify the `-Xmx` setting.
 
-OLD approach : Change `IntelliJ IDEA XXX.app/Contents/Info.plist` `JVMVersion` from `1.6*` to `1.7*`
-I don't use this anymore as it breaks the application's signature.
+Check <https://www.jetbrains.com/help/idea/2016.1/tuning-intellij-idea.html>.
 
-Instead, download a JDK bundled one. See <http://stackoverflow.com/a/26484162>
-
-Add following lines to `/Users/ali/Desktop/devl-tools/IntelliJ IDEA 13.app/bin/idea.properties`:
-
-* `idea.config.path=/Users/ali/Desktop/devl-tool-data/IntellijIdea13/config`
-* `idea.system.path=/Users/ali/Desktop/devl-tool-data/IntellijIdea13/system`
-* `idea.plugins.path=/Users/ali/Desktop/devl-tool-data/IntellijIdea13/plugins`
-* `idea.log.path=/Users/ali/Desktop/devl-tool-data/IntellijIdea13/log`
-
-### SAP GUI
-Go to SAP GUI Options from Windows menu.
-Set font size to 12 or larger.
 
 ### Xcode
-Install Xcode from AppStore, otherwise IOS 6 simulator doesn't work.
-
-### Keyboard:
-* If you haven't created your custom keyboard yet, install `ukalele`, create a custom keyboard layout.
-* Or get it from [here]({{ '/post-assets/MyBritish.keylayout' | prepend: site.baseurl }})
-* Copy it into `/Library/Keyboard Layouts/`
-* Add the custom layout from OsX Preferences->Keyboard.
-* Then edit the file
-* Remove other keyboards
-* Set custom layout as the default one.
-* Then do <http://apple.stackexchange.com/questions/44913/make-a-custom-keyboard-layout-the-system-default-even-for-the-login-screen>
+Install Xcode from AppStore, otherwise IOS simulator doesn't work.
 
 
-----------------------------------------------------------------------------------------------------------------------------------------
+### Git config
 
-Install other tools
-----------------------------------------------------------------------------------------------------------------------------------------
+    git config --global user.name "John Doe"
+    git config --global user.email johndoe@example.com
+    git config --global core.autocrlf input
 
-### Firefox - safe way
-Download Firefox. Don't DnD into applications. DnD into `~/Desktop/apps/noindex` twice with names  `Firefox-Auth.app` and `Firefox-Ninja.app`. 
-
-If you've already run any of these, then close it. Open profile manager : `~/Desktop/apps/noindex/Firefox-Auth.app/Contents/MacOS/firefox-bin -p`.
-Delete all profiles.
- 
-Create 2 profiles : `Auth` and `Ninja` with folders `Users/ali/Desktop/app-data/firefox-auth-profile` and `Users/ali/Desktop/app-data/firefox-ninja-profile`.
-
-Open AppleScript Script Editor and paste this:
-
-`do shell script "/Users/ali/Desktop/apps/noindex/Firefox-Auth.app/Contents/MacOS/firefox-bin -P \"Auth\" -no-remote  > /dev/null 2>&1 &"`
-
-Save the script into `/Users/ali/Desktop/apps/` with the file format *Application* and name `firefox-auth.app`.
-
-Do the similar for creating another profile, namely "Ninja":
-
-`do shell script "/Users/ali/Desktop/apps/noindex/Firefox-Ninja.app/Contents/MacOS/firefox-bin -P \"Ninja\" -no-remote  > /dev/null 2>&1 &"`
-
-Save the script into `/Users/ali/Desktop/apps/` with the file format *Application* and name `firefox-ninja.app`.
-
-Change icons of both scripts. Change icon of "Firefox-Ninja.app" as well. Otherwise, they will look the same.
-
-Add `/Users/ali/Desktop/apps/noindex` to Spotlight's exclude list.
-
-Open both Firefox instances and disable cookies.
-
-### <s>Chrome</s> (I don't use it anymore)
-Download Chrome. Don't DnD into applications. DnD into `~/Desktop/apps/noindex` twice with names  `Google Chrome Auth.app` and `Google Chrome Ninja.app`.
-
-If you've already run any of these, then close it. Delete the following folder: `/Users/ali/Library/Application Support/Google/Chrome`
-
-Open AppleScript Script Editor and paste this:
-
-`do shell script "/Users/ali/Desktop/apps/noindex/Google\\ Chrome\\ Auth.app/Contents/MacOS/Google\\ Chrome --user-data-dir=/Users/ali/Desktop/app-data/chrome-auth-profile > /dev/null 2>&1 &"`
-
-Save the script into `/Users/ali/Desktop/apps/` with the file format *Application* and name `chrome-auth-user.app`.
-
-Do the similar for creating another profile, namely "ninja".
-
-`do shell script "/Users/ali/Desktop/apps/Google\\ Chrome\\ Ninja.app/Contents/MacOS/Google\\ Chrome --user-data-dir=/Users/ali/Desktop/app-data/chrome-ninja-profile > /dev/null 2>&1 &"`
-
-Save the script into `/Users/ali/Desktop/apps/` with the file format *Application* and name `chrome-ninja-user.app`.
-
-Change icons of both scripts. Change icon of "Google Chrome Ninja.app" as well. Otherwise, they will look the same.
-
-Add `/Users/ali/Desktop/apps/noindex` to Spotlight's exclude list.
-
-Open both Chrome instances and disable cookies. Install *Whitelist* Chrome extension to `chrome-auth`.
-
-### Parallels
-Starting the app from Finder or Spotlight might not work.
-try `open /Applications/Parall.... .app`
-
-Remove stuff:
-{% highlight bash %}
-rm -rf /Users/$USER/Library/Parallels/
-rm -rf /Users/$USER/Library/Logs/parallels*
-rm -rf /Users/$USER/Library/Saved\ Application\ State/com.parallels.desktop.console.savedState/
-rm -rf /Users/$USER/Library/Preferences/com.parallels.*
-rm -rf /Users/$USER/Library/Preferences/Parallels/
-rm -rf /Applications\ \(Parallels\)/
-rm -rf /Applications/Parallels*
-sudo rm -rf /Library/Logs/parallels*
-sudo rm -rf /Library/Preferences/Parallels/
-sudo rm -rf /Users/Shared/Parallels/
-{% endhighlight %}
-
-
-
-----------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
 
 Some customization files
-----------------------------------------------------------------------------------------------------------------------------------------
-
-### Final `/etc/launchd.conf`
-{% highlight bash %}
-# Set environment variables here so they are available globally to all apps                                                                                                                                                                   
-# (and Terminal), including those launched via Spotlight.
-#
-# After editing this file run the following command from the terminal to update 
-# environment variables globally without needing to reboot.
-# NOTE: You will still need to restart the relevant application (including 
-# Terminal) to pick up the changes!
-# grep -E "^setenv" /etc/launchd.conf | xargs -t -L 1 launchctl
-#
-# See http://www.digitaledgesw.com/node/31
-# and http://stackoverflow.com/questions/135688/setting-environment-variables-in-os-x/
-#
-# Note that you must hardcode the paths below, don't use enviroment variables.
-# You also need to surround multiple values in quotes, see MAVEN_OPTS example below.
-#
-#umask 077        # don't do it
-setenv JAVA_VERSION 1.7
-setenv JAVA_HOME /Library/Java/JavaVirtualMachines/jdk1.7.0_67.jdk/Contents/Home
-
-setenv PATH "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/ali/Desktop/devl-tools/apache-maven-3.2.3/bin"
-
-setenv MAVEN_OPTS "-Xmx1024M -XX:MaxPermSize=512m"
-setenv M2_HOME /Users/ali/Desktop/devl-tools/apache-maven-3.2.3
-setenv GRADLE_HOME /Users/ali/Desktop/devl-tools/gradle-2.1/bin
-{% endhighlight %}
-
-### Final `/etc/profile`
-{% highlight bash %}
-# System-wide .profile for sh(1)
-
-if [ -x /usr/libexec/path_helper ]; then
-    eval `/usr/libexec/path_helper -s`
-fi
-
-if [ "${BASH-no}" != "no" ]; then
-    [ -r /etc/bashrc ] && . /etc/bashrc
-fi
-
-export PATH=$PATH:/Users/ali/Desktop/devl-tools/apache-maven-3.2.3/bin/
-export PATH=$PATH:/Users/ali/Desktop/devl-tools/mysql/bin  
-{% endhighlight %}
-
+---------------------------------------------------------------------------------------
 
 ### Final `~./bash_profile`
+
 {% highlight bash %}
-# color settings                                                                                                                                                                                                                              
+# color settings
+# http://stackoverflow.com/questions/1550288/os-x-terminal-colors
 export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ "
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 
 # some alias
+# http://stackoverflow.com/questions/1550288/os-x-terminal-colors
 alias ls='ls -GFh --color'
 
 # enable bash completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
+  . $(brew --prefix)/etc/bash_completion
 fi
 
 # set editor settings
 export EDITOR=vim
-# Vim in less behavior
-export VIM_LESS=`find /usr/share/vim -name 'vim[0-9][0-9]'`/macros/less.sh
 
 # arrange default path
 export PATH=/usr/local/bin:$PATH
 
 # make homebrew installed tools have precedence
-# homebrew installed gnu code utils have precedence over OsX provided same tools
-# see http://osxtutorialsunix.blogspot.ch/2013/11/updating-coreutils-homebrew-mavericks.html
-export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
-export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
+export MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
+export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
+export MANPATH="/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
 
 # define command `cdf`. This does `cd` into open finder folder in terminal
 cdf() {
@@ -429,7 +251,9 @@ cdf() {
 {% endhighlight %}
 
 ### Final `~/.vimrc`:
+
 Enable some special stuff in Vim
+
 {% highlight vim %}
 " Set tabs to 4 spaces                                                                                                                                                                                                                        
 set tabstop=4
@@ -437,7 +261,8 @@ set shiftwidth=4
 set expandtab
 
 " Enable mouse (scrolling and curser setting)
-set mouse=nicr
+" http://superuser.com/questions/146768/mouse-cursor-in-terminal
+set mouse=a
 
 " Set colorscheme
 colorscheme desert
@@ -474,54 +299,9 @@ set undodir=~/.vim/undo
 endif
 {% endhighlight %}
 
-### Final `/etc/my.cnf`
-{% highlight ini %}
-# The following options will be passed to all MySQL clients                                                                                                                                                                                   
-[client]
-#password   = your_password
-port        = 3306
+Make sure you run following afterwards:
 
-
-# MySQL command line client
-[mysql]
-default-character-set=latin1
-no-auto-rehash
-
-
-# The MySQL server
-[mysqld]
-user            = ali
-port        = 3306
-#basedir         = /usr/local/mysql
-basedir         = /Users/ali/Desktop/devl-tools/mysql
-datadir         = /Users/ali/Desktop/devl-tool-data/mysql-data
-default-storage-engine=INNODB
-
-# default charset of a database or a table, if not specified
-character-set-server=latin1
-
-# Set the SQL mode to strict
-sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
-
-# Maximum size for internal (in-memory) temporary tables. If a table
-# grows larger than this value, it is automatically converted to disk
-# based table This limitation is for a single table. There can be many
-# of them.
-tmp_table_size=100M
-
-#innodb_data_home_dir = /Users/ali/Desktop/devl-tool-data/mysql-data
-innodb_data_file_path = ibdata1:10M:autoextend
-#innodb_log_group_home_dir = /Users/ali/Desktop/devl-tool-data/mysql-data
-
-
-[mysqldump]
-quick
-max_allowed_packet = 16M
-
-[myisamchk]
-key_buffer_size = 8M
-sort_buffer_size = 8M
-
-[mysqlhotcopy]
-interactive-timeout
-{% endhighlight %}
+    mkdir ~/.vim
+    mkdir ~/.vim/backups
+    mkdir ~/.vim/swaps
+    mkdir ~/.vim/undo
