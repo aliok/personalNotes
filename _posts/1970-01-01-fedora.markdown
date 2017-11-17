@@ -1,0 +1,340 @@
+---
+layout: post
+title:  "Fedora"
+date:   2017-11-16 20:45:15
+categories: public
+---
+
+### Keyboard key mapping (and window manager)
+Fedora comes with a Gnome version that uses Wayland as a window manager. However, it is very hard to remap keys with Wayland.
+
+Thus, first, switch to X.org:
+
+
+**`/etc/gdm/custom.conf`**
+```
+# GDM configuration storage
+
+[daemon]
+# Uncoment the line below to force the login screen to use Xorg
+WaylandEnable=false
+DefaultSession=gnome-xorg.desktop
+
+
+[security]
+
+[xdmcp]
+
+[chooser]
+
+[debug]
+# Uncomment the line below to turn on debugging
+#Enable=true
+```
+
+(ref: https://ask.fedoraproject.org/en/question/96134/how-can-i-set-xorg-as-a-default-on-fedora-25/)
+
+Then, use these xmapmod settings:
+```
+! remove existing mappings for meta key
+remove mod1 = Meta_L
+
+! remove all mappings for win key (super)
+remove mod5 = Super_L Super_R
+remove mod4 = Super_L Super_R
+remove mod3 = Super_L Super_R
+remove mod2 = Super_L Super_R
+remove mod1 = Super_L Super_R
+
+! remove mapping for left alt
+remove mod1 = Alt_L
+
+! remove mapping for right alt
+remove mod1 = Alt_R
+
+! swap alt and win key (physical keys)
+keycode 133 = Alt_L
+keycode 64 = Meta_L
+
+! make physical Alt_R key to act like Super_R
+keycode 108 = Super_R
+
+! add new meta key to meta, new alt key to alt
+add mod4 = Meta_L
+add mod1 = Alt_L
+
+! add Super_R to mod4
+add mod4 =  Super_R
+```
+
+This is the mapping before:
+```
+[aliok@localhost ~]$ xmodmap
+xmodmap:  up to 4 keys per modifier, (keycodes in parentheses):
+
+shift       Shift_L (0x32),  Shift_R (0x3e)
+lock        Caps_Lock (0x42)
+control     Control_L (0x25),  Control_R (0x69)
+mod1        Alt_L (0x40),  Alt_R (0x6c),  Meta_L (0xcd)
+mod2        Num_Lock (0x4d)
+mod3
+mod4        Super_L (0x85),  Super_R (0x86),  Super_L (0xce),  Hyper_L (0xcf)
+mod5        ISO_Level3_Shift (0x5c),  Mode_switch (0xcb)
+```
+
+This is the mapping after:
+```
+[aliok@localhost ~]$ xmodmap
+xmodmap:  up to 3 keys per modifier, (keycodes in parentheses):
+
+
+shift       Shift_L (0x32),  Shift_R (0x3e)
+lock        Caps_Lock (0x42)
+control     Control_L (0x25),  Control_R (0x69)
+mod1        Alt_L (0x85),  Alt_L (0xcc)
+mod2        Num_Lock (0x4d)
+mod3
+mod4        Meta_L (0x40),  Super_R (0x6c),  Super_R (0x86),  Meta_L (0xcd),  Hyper_L (0xcf)
+mod5        ISO_Level3_Shift (0x5c),  Mode_switch (0xcb)
+```
+
+Use `xev` to learn about codes for physical keys.
+
+References:
+* http://manpages.ubuntu.com/manpages/zesty/en/man1/xmodmap.1.html
+* https://unix.stackexchange.com/questions/9098/map-windows-key-on-keyboard-to-ctrl
+* https://askubuntu.com/questions/102846/remapping-keyboard-shortcuts-copy-paste-etc-to-alt-key-instead-of-ctrl
+
+
+
+I couldn't make this setting work on startup. No matter what I tried
+* .Xmodmap
+* .xmodmaprc
+* .xinitrc
+* .xsession
+* .xsessionrc
+* /etc/X11/Xsession.d/80_xmodmap
+
+So, I created this bash script on the desktop to click once manually:
+
+```
+xmodmap ~/.Xmodmap
+```
+
+**Disable super key for other shortcuts**
+
+Go to "Tweaks" tool and then go to "Keyboard and Mouse". Set "Switch between overview and desktop" to right super.
+
+Also go to shortcuts settings make it matching to this:
+
+```
+[aliok@localhost ~]$ dconf dump /org/gnome/desktop/wm/keybindings/
+[/]
+switch-to-workspace-up=['', '<Control><Alt>Up']
+move-to-workspace-left=['']
+move-to-monitor-right=['']
+begin-move=['']
+unmaximize=['', '<Alt>F5']
+toggle-maximized=['<Super>F10']
+switch-to-workspace-1=['']
+panel-run-dialog=['']
+move-to-monitor-left=['']
+maximize=['']
+begin-resize=['']
+panel-main-menu=['']
+cycle-group-backward=@as []
+cycle-panels-backward=@as []
+switch-input-source=['']
+switch-to-workspace-down=['', '<Control><Alt>Down']
+move-to-workspace-1=['']
+cycle-group=['']
+move-to-workspace-last=['']
+switch-to-workspace-last=['']
+minimize=['']
+move-to-workspace-down=['', '<Control><Shift><Alt>Down']
+switch-panels-backward=@as []
+move-to-monitor-down=['']
+activate-window-menu=['']
+cycle-panels=['']
+move-to-workspace-up=['', '<Control><Shift><Alt>Up']
+move-to-workspace-right=['']
+switch-panels=['']
+switch-input-source-backward=@as []
+close=['<Super>w']
+move-to-monitor-up=['']
+```
+
+Use `dconf-editor` to compare and adjust.
+
+
+
+
+### Keyboard type fast
+
+See https://askubuntu.com/questions/140255/how-to-override-the-new-limited-keyboard-repeat-rate-limit
+
+See existing values:
+
+```
+[aliok@localhost ~]$ gsettings get org.gnome.desktop.peripherals.keyboard repeat-interval
+uint32 11
+[aliok@localhost ~]$ gsettings get org.gnome.desktop.peripherals.keyboard delay
+uint32 150
+```
+
+Set new values:
+
+```
+gsettings set org.gnome.desktop.peripherals.keyboard delay 150
+gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 11
+```
+
+### Don't disable touchpad while writing
+
+https://ask.fedoraproject.org/en/question/66444/disable-touchpad-while-typing-on-gnome-fedora-22/
+
+Install dconf-editor first:
+
+```
+sudo dnf install dconf-editor
+```
+
+
+Read value:
+
+```
+[aliok@localhost ~]$ dconf read /org/gnome/desktop/peripherals/touchpad/disable-while-typing
+false
+```
+
+Set value:
+
+```
+dconf write /org/gnome/desktop/peripherals/touchpad/disable-while-typing false
+```
+
+### See files and folders on Desktop
+
+https://ask.fedoraproject.org/en/question/55652/how-to-see-desktop-files-and-folders/
+
+### Install an old version of a package
+
+Find it from https://koji.fedoraproject.org/koji/
+
+e.g.
+* https://koji.fedoraproject.org/koji/buildinfo?buildID=781907
+* then download protobuf-compiler-2.6.1-5.fc25.x86_64.rpm
+* then install it using `sudo dnf install protobuf-compiler-2.6.1-5.fc25.x86_64.rpm`
+* says dependency missing
+* download protobuf-2.6.1-5.fc25.x86_64.rpm
+* install it, then install the first packages
+
+
+
+### Shell extensions
+
+https://extensions.gnome.org/local/
+
+```
+[aliok@localhost ~]$ dconf dump /org/gnome/shell/extensions/
+[extra-panels]
+available-list=['places-menu', 'apps-menu', 'system-monitor', 'clipboardIndicator', 'servicesManager']
+
+[clipboard-indicator]
+display-mode=0
+enable-keybindings=false
+history-size=30
+notify-on-copy=false
+
+[services]
+show-restart=true
+position='panel'
+systemd=['{"name":"Docker","service":"docker.service","type":"system"}', '{"name":"Redis","service":"redis.service","type":"system"}']
+show-add=true
+
+[KeepAwake@jepfa.de]
+idle-activation-enabled=false
+idle-dim=false
+idle-delay=0
+sleep-inactive-battery-type='nothing'
+sleep-inactive-ac-type='nothing'
+restore-state=false
+
+[system-monitor]
+battery-show-text=false
+cpu-refresh-time=3500
+fan-sensor-file='/sys/class/hwmon/hwmon2/device/fan1_input'
+compact-display=true
+memory-show-menu=true
+net-display=false
+memory-graph-width=50
+memory-style='digit'
+battery-show-menu=true
+battery-time=true
+battery-display=true
+cpu-style='both'
+cpu-graph-width=50
+cpu-show-text=false
+
+[no-title-bar]
+only-main-monitor=true
+change-appmenu=true
+button-position='within-status-area'
+hide-buttons=true
+
+[app-keys]
+use-nw=false
+use-kp-keys=false
+close-overview=false
+cycle-windows=false
+use-num-keys=false
+cycle-windows-active=false
+use-kp-nw=false
+
+[extendedgestures]
+horizontal-three-swipes=false
+vertical-three-action='switch-workspace'
+horizontal-three-action='switch-workspace'
+vertical-three-swipes=true
+
+[window-list]
+show-on-all-monitors=false
+
+[workspace-grid]
+relative-workspace-switching=false
+num-rows=1
+num-columns=5
+wrap-to-same=true
+
+[dash-to-dock]
+force-straight-corner=true
+intellihide-mode='FOCUS_APPLICATION_WINDOWS'
+hot-keys=false
+custom-background-color=true
+apply-custom-theme=false
+custom-theme-running-dots=true
+unity-backlit-items=false
+dock-position='BOTTOM'
+custom-theme-shrink=true
+background-opacity=0.35999999999999999
+height-fraction=0.90000000000000002
+opaque-background=true
+background-color='#babdb6'
+preferred-monitor=0
+```
+
+List
+* https://extensions.gnome.org/extension/6/applications-menu/
+* https://extensions.gnome.org/extension/1191/battery-percentage/
+* https://extensions.gnome.org/extension/779/clipboard-indicator/
+* https://extensions.gnome.org/extension/307/dash-to-dock/
+* https://extensions.gnome.org/extension/1253/extended-gestures/
+* https://extensions.gnome.org/extension/1097/keep-awake/
+* https://extensions.gnome.org/extension/1267/no-title-bar/
+* https://extensions.gnome.org/extension/118/no-topleft-hot-corner/
+* https://extensions.gnome.org/extension/8/places-status-indicator/
+* https://extensions.gnome.org/extension/1034/services-systemd/
+* https://extensions.gnome.org/extension/1161/show-ip/
+* https://extensions.gnome.org/extension/906/sound-output-device-chooser/
+* https://extensions.gnome.org/extension/120/system-monitor/
+* https://extensions.gnome.org/extension/484/workspace-grid/
