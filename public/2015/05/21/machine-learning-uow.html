@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Machine Learning - University of Washington</title>
+    <meta name="description" content="Check out my [website](http://www.aliok.com.tr)
+">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="canonical" href="http://personalnotes.aliok.com.tr/public/2015/05/21/machine-learning-uow.html">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">Ali Ok's personal notes</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+          <a class="page-link" href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Machine Learning - University of Washington</h1>
+  </header>
+
+  <article class="post-content">
+    <p><a href="https://class.coursera.org/machlearning-001">https://class.coursera.org/machlearning-001</a></p>
+
+<h1 id="terminology">Terminology:</h1>
+<dl>
+  <dt>training example</dt>
+  <dd>An input-output pair <code class="highlighter-rouge">&lt;x, f(x)&gt;</code></dd>
+  <dt>Target function / target concept</dt>
+  <dd>true function we want to learn <code class="highlighter-rouge">f</code>. this is not accessible.</dd>
+  <dt>Hypothesis</dt>
+  <dd>Proposed function <code class="highlighter-rouge">h</code> believed to be similar to <code class="highlighter-rouge">f</code>. Candidate function</dd>
+  <dt>Concept</dt>
+  <dd>A boolean function. If hypothesis is boolean.</dd>
+  <dt>Positive example / positive instance</dt>
+  <dd>Examples for which <code class="highlighter-rouge">f(x)=1</code> are called</dd>
+  <dt>Classifier</dt>
+  <dd>Discrete-valued function. Like a spam filter that says “this is spam” and “this is not spam”.</dd>
+  <dt>Class / class label / label</dt>
+  <dd>Possible values <code class="highlighter-rouge">f(x)</code> in <code class="highlighter-rouge">{1,....,K}</code></dd>
+  <dt>Hypothesis space</dt>
+  <dd>Spaces of all hypotheses that can be output by a learning algorithm.</dd>
+  <dt>Version space</dt>
+  <dd>Space of all hypotheses that have not yet been ruled out by a training example. Subset of the hypothesis space. Shrinks when finding new examples.</dd>
+  <dt>Overfitting</dt>
+  <dd>My current model/algorithm is matching perfectly. But, what can I do to optimize accuracy on future data points?</dd>
+  <dd>Accuracy I want is not on training data, but on test data.</dd>
+</dl>
+
+<h1 id="introduction">Introduction</h1>
+
+<ul>
+  <li>
+    <p>Machine learning algorithms are combination of different components. Just learn the components!</p>
+  </li>
+  <li>
+    <p>Every machine learning algorithm has three components:</p>
+    <ul>
+      <li>Representation</li>
+      <li>Evaluation</li>
+      <li>Optimization : depends on evaluation and representation</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="representation-examples">Representation examples</h1>
+
+<dl>
+  <dt>decision trees</dt>
+  <dd>just trees of decisions</dd>
+  <dt>set of rules / logic programs</dt>
+  <dd>like decision trees but not nested. chain mechanism</dd>
+  <dt>instances</dt>
+  <dd>remember the cases you saw. when a new case comes out, find the closest case you’ve seen. like a doctor’s diagnosis.</dd>
+  <dt>graphical models</dt>
+  <dd>Bayes/Markov nets. Probability.</dd>
+  <dt>Neural networks</dt>
+  <dd>you know it</dd>
+  <dt>Support vector machines</dt>
+  <dd>TBD</dd>
+  <dt>Model ensembles</dt>
+  <dd>combining representations</dd>
+</dl>
+
+<h1 id="evaluation-measure-examples">Evaluation measure examples</h1>
+
+<dl>
+  <dt>Accuracy</dt>
+  <dd>how much of my guess was right</dd>
+  <dd>how much percentage of labels of mine as spam and not spam were right?</dd>
+  <dt>Precision and recall</dt>
+  <dd>to find out false positives and false negatives.</dd>
+  <dd>precision : how much percentage of the mails I labelled as spam were spams out of real spams?</dd>
+  <dd>recall: how much percentage of the mails I labelled as spam were spam out of all emails?</dd>
+  <dt>Squared error</dt>
+  <dd>sum of all errors</dd>
+  <dt>Likelihood</dt>
+  <dd>how likely is what you see according to your model</dd>
+  <dt>Posterior probability</dt>
+  <dd>combination of likelihood and priori</dd>
+  <dt>Cost / Utility</dt>
+  <dd>false positives are often costly than false negatives. that means, accuracy is not everything.</dd>
+  <dd>marking a non-spam mail as spam is worse than not marking a spam as spam</dd>
+  <dt>Margin</dt>
+  <dd>when you make boundary, how close you’re to the real line</dd>
+  <dt>Entropy</dt>
+  <dd>information content as a variable</dd>
+  <dt>K-L divergence</dt>
+  <dd>TBD</dd>
+</dl>
+
+<h1 id="optimization-examples">Optimization examples</h1>
+
+<dl>
+  <dt>combinatorial optimization</dt>
+  <dd>e.g. greedy search. Used on discrete model.</dd>
+  <dt>convex optimization</dt>
+  <dd>e.g. gradient descent. Used on continuous model.</dd>
+  <dt>constrained optimization</dt>
+  <dd>e.g. linear programming. combination of combinatorial and convex optimization.</dd>
+</dl>
+
+<h1 id="types-of-learning">Types of learning</h1>
+
+<dl>
+  <dt>supervised (inductive)</dt>
+  <dd>largest, most mature type of ML. training data includes desired outputs.</dd>
+  <dt>unsupervised learning</dt>
+  <dd>training data does not include desired outputs. example: clustering customers like teenagers X middle age people</dd>
+  <dt>semi-supervised learning</dt>
+  <dd>training data includes a few desired outputs. you cannot afford label all data; just some of them. then label existing data.</dd>
+  <dt>reinforcement learning</dt>
+  <dd>rewards from sequence of actions. hardest one. no point-by-point decisions. sequence of decisions.</dd>
+</dl>
+
+<h1 id="ml-in-practice">ML in practice</h1>
+
+<ul>
+  <li>Understanding domain, prior knowledge and goals: learn the problem, learn the goal</li>
+  <li>Data integration, selection, cleaning, pre-processing</li>
+  <li>Learning models: come up with a model from data/domain.</li>
+  <li>Interpreting results: are you satisfied with the result?</li>
+  <li>Consolidating and deploying discovered knowledge: Use the model in reality.</li>
+  <li>Go step #0</li>
+</ul>
+
+<h1 id="search-prodecures">Search prodecures</h1>
+<ul>
+  <li>Greedy search</li>
+  <li>Round-robin replacement</li>
+  <li>Backfitting</li>
+  <li>Beam search</li>
+</ul>
+
+<h1 id="supervised-learning--inductive-learning">Supervised learning = Inductive learning</h1>
+
+<ul>
+  <li>Given examples of a function <code class="highlighter-rouge">(x, f(x))</code> : <code class="highlighter-rouge">x</code>-&gt; input, <code class="highlighter-rouge">f(x)</code>-&gt; output</li>
+  <li>Predict function <code class="highlighter-rouge">f(x)</code> for new examples X
+    <ul>
+      <li>Discrete <code class="highlighter-rouge">f(x)</code>: Classification</li>
+      <li>Continuous <code class="highlighter-rouge">f(x)</code>: Regression</li>
+      <li>If <code class="highlighter-rouge">f(x)</code> is <code class="highlighter-rouge">probability(X)</code> : Probability estimation. Regression with outcomes that add up to 1</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="examples">Examples:</h4>
+<ul>
+  <li>Credit risk assessment
+    <ul>
+      <li><code class="highlighter-rouge">x</code>    : properties of customer and proposed purchase</li>
+      <li><code class="highlighter-rouge">f(x)</code> : approve purchase or not</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="appropriate-situations">Appropriate situations</h4>
+<ul>
+  <li>No human expert:
+    <ul>
+      <li>predicting binding strength of new molecule to AIDS protease molecule</li>
+    </ul>
+  </li>
+  <li>Humans can perform the task, but can’t describe how
+    <ul>
+      <li>hand writing recognition</li>
+    </ul>
+  </li>
+  <li>Desired function is changing frequently
+    <ul>
+      <li>stock predictions</li>
+    </ul>
+  </li>
+  <li>Each user needs a customized function <code class="highlighter-rouge">f</code>
+    <ul>
+      <li>spam classification, book recommendation</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="hypothesis-spaces">Hypothesis spaces</h4>
+<ul>
+  <li>Complete ignorance: We know nothing or very little about the output.
+    <ul>
+      <li>e.g. a boolean function that we only know 2 input-output pairs but there are 4 parameters which means we complete input-output pairs would be 2^4=16</li>
+    </ul>
+  </li>
+  <li>Simple rules: easy conjunction functions</li>
+  <li>m-of-n rules: if m of n rules are true, then we have our rule.
+    <ul>
+      <li>like a medical diagnosis system. one might not have some symptoms.</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="decision-trees">Decision trees</h1>
+<ul>
+  <li>Hypothesis space:
+    <ul>
+      <li>Variable size: Size of the tree grows with the amount of data we have</li>
+      <li>Deterministic: For each example you’re positive or negative</li>
+      <li>Discrete and continuous parameters: Discrete params are choices. Continuous params would be sth like probabilities.</li>
+    </ul>
+  </li>
+  <li>In X-Y 2 dimensional space: decision trees can’t match a line. It outputs small rectangles. Or in 3D, it outputs small cubes.</li>
+</ul>
+
+<h4 id="building-a-decision-tree">Building a decision tree</h4>
+<ul>
+  <li>Start with most important feature</li>
+  <li>Then you have a left tree and right tree</li>
+  <li>Then pick the next most important feature on left tree</li>
+  <li>Then pick the next most important feature on right tree</li>
+  <li>Recurse …</li>
+  <li>Selecting the most important feature
+    <ul>
+      <li>Simplest way to find out is pick the attribute that has lowest error rate when used alone.</li>
+      <li>Another method is picking the one that has best information gain (entropy)</li>
+    </ul>
+  </li>
+</ul>
+
+<h5 id="entropy">Entropy</h5>
+<ul>
+  <li>Surprise, <code class="highlighter-rouge">S(V=v)</code> of each value of V defined to be 
+  <code class="highlighter-rouge">S(V=v) = -lg P(V=v)</code> where <code class="highlighter-rouge">P</code> is a probability distribution.</li>
+  <li>Entropy = average surprise. Measure of uncertainty.
+    <ul>
+      <li>A fair coin has higher entropy than a cheating one. You’re always surprised when both possibilities are equal.</li>
+    </ul>
+  </li>
+</ul>
+
+<h5 id="non-boolean-functions">Non-boolean functions</h5>
+<ul>
+  <li>
+    <p>Construct a multiway split:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ROOT
+ / |  \
+A  B  C
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Test for one versus all others:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     ROOT
+   /      \
+  A       !A
+ / \      / \
+B  !B    B   !B
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Group the values into two disjoint subsets:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     ROOT
+   /      \
+ A or B   C or D
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h5 id="unknown-attribute-values">Unknown attribute values</h5>
+<p>Example: you have 2 types of attributes but attr#2 is only available on a small subset. What would you do?</p>
+
+<p>Different options:</p>
+
+<ol>
+  <li>Assign most common value of attr#2 for missing ones.</li>
+  <li>Assign most common value of attr#2 for missing ones for attr#1 value.</li>
+  <li>Convert method #2 to a probability method.</li>
+</ol>
+
+<h5 id="overfitting">Overfitting</h5>
+<p>Overfitting happens when the decision tree fits the training data perfectly but on test data it doesn’t fit very good. 
+That means, I might have a bad answer for future tests.</p>
+
+<p>For example: my friend didn’t want to play tennis on a very good weather because of other reasons that are not in my decision tree (e.g. being sick).
+Because of that example, I cannot claim that he doesn’t want to play tennis on a good day.
+Usually very big trees overfits the training data.</p>
+
+<p>Avoiding:</p>
+
+<ul>
+  <li>Split data into training and test data</li>
+  <li>Having a small tree: grow full tree then post-prune (budamak).
+    <ul>
+      <li>How to select best tree:
+        <ul>
+          <li>Measure performance over training data</li>
+          <li>Measure performance over separate validation data set (separate from test set)</li>
+          <li>Add complexity penalty to performance measure: e.g. increase in size of tree would result in a penalty</li>
+        </ul>
+      </li>
+      <li>How to do pruning:
+        <ul>
+          <li>Prune the tree based on validation data</li>
+          <li>2 basic methods: reduced-error pruning and rule post-pruning</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>Cross validation: Split data into e.g. 10 subsets. Pick 1 as training and 9 as validation set. Then go to next round (select next set as training).
+ This would be a good idea if we have very small data. On big data, there is no need.</p>
+
+<h5 id="scaling">Scaling:</h5>
+<ul>
+  <li>ID3, CR.5     : random access</li>
+  <li>SPRINT, SLIQ  : multiple iterations</li>
+  <li>VFTP          : online (data stream)</li>
+</ul>
+
+<h1 id="rule-based-learning">Rule based learning</h1>
+<p>Hypothesis space:</p>
+
+<ul>
+  <li>Each rule is a conjunction of tests</li>
+  <li>A rule set is disjunction of rules. e.g. all rules are for one class (e.g. 1 if one rule matches, 0 if none matches)</li>
+</ul>
+
+<p>Rule sets vs decision trees:</p>
+
+<ul>
+  <li>They can be converted to each other. But converting rule sets to decision trees might end up in huge treees because you need to replicate tests.</li>
+  <li>
+    <p>It is easier to overfit with rule learning than decision tree learning.</p>
+  </li>
+  <li>
+    <p>Typical search procedure employed is beam search, not plain greedy search.</p>
+  </li>
+  <li>Learning rules for multiple classes: Do learning for classes one by one.
+  Two possible way to figure out the class of an example:
+    <ul>
+      <li>Order rules (decision lists)</li>
+      <li>Weighted vote (e.g., weight = accuracy x coverage)</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="learning-first-order-rules">Learning First-Order Rules</h4>
+<p>Propositional representation: Just booleans
+First order logic : Functions, predicates etc. which are like programming</p>
+
+<ul>
+  <li>Can learn set of rules such as:
+    <ul>
+      <li>Ancestor(x,y) &lt;– Parent(x,y)  (base case)</li>
+      <li>Ancestor(x,y) &lt;– Parent(x,z) and Ancestor (z,y)
+        <ul>
+          <li>x is y’s ancestor, if there is a z which x is the parent of it and z is
+an ancestor of y</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Instead of having rules only for the object, we have rules for the related objects as well</li>
+</ul>
+
+<h4 id="foil--first-order-inductive-learner">FOIL : First-Order Inductive Learner</h4>
+
+<ul>
+  <li>Relations etc. –&gt; can be modeled as DB tables</li>
+  <li>Rules can be made from relations</li>
+</ul>
+
+<h4 id="induction-as-inverted-deduction">Induction as Inverted Deduction</h4>
+
+<ul>
+  <li>Classical deduction example: Socrates is a man; all men are mortal; thus Socrates is mortal.</li>
+  <li>Classical induction example: Socrates is a man; Socrates is mortal; XYZ is a man; XYZ is mortal. Then maybe all men are mortal.</li>
+  <li>Deduction vs induction: Go to specific from general vs go to general from specific examples</li>
+</ul>
+
+<h1 id="instance-based-learning">Instance based learning</h1>
+<ul>
+  <li>K-nearest neighbor</li>
+  <li>Other forms of IBL</li>
+  <li>
+    <p>Collaborative filtering</p>
+  </li>
+  <li>Instance-based learning
+    <ul>
+      <li>Just store all training examples</li>
+      <li>Nearest neighbor: When we have a new instance, scan thru the training examples and find the closest to that one</li>
+      <li>k-nearest neighbor: Find k closest. Each one has a class and they vote (or averaged, or meaned, or weighted-averaged, etc.).</li>
+    </ul>
+  </li>
+  <li>Advantages:
+    <ul>
+      <li>Training is very fast</li>
+      <li>Learn complex target functions easily: Once you find neighbors, you implicitly find complex functions</li>
+      <li>Don’t lose information</li>
+    </ul>
+  </li>
+  <li>Disadvantages:
+    <ul>
+      <li>Slow query time. And it goes worse with more data.</li>
+      <li>Lots of storage &lt;– stores all training examples</li>
+      <li>Easily fooled by irrelevant attributes. But e.g. decision trees find the relevant attributes.</li>
+    </ul>
+  </li>
+  <li>Distance measures: How do I define closest? (similarity measure)
+    <ul>
+      <li>Numeric features:
+        <ul>
+          <li>Euclidian(straight line distance), Manhattan(sum of the distances), L^n-norm(more advanced version of square root distance)</li>
+          <li>Normalized by: range, std. deviation</li>
+        </ul>
+      </li>
+      <li>Symbolic features (for boolean features):
+        <ul>
+          <li>Hamming/overlap: for each feature number of same features</li>
+          <li>Value difference measure(VDM): I have 3 colors RGB. What could possibly make R more similar to G or B? But think about classification. a bit complicated. TBD</li>
+        </ul>
+      </li>
+      <li>In general:
+        <ul>
+          <li>Arbitrary, encode knowledge</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Voronoi diagram: TBD</li>
+  <li>Voronoi cell of x in training set:
+    <ul>
+      <li>All points closer to x to any other instance in training set. That means, when we have an instance to test which lies in that cell, class will be that cell’s class (x’s class).</li>
+      <li>Region of class C: Union of Voronoi cells of instances of class C in training set</li>
+    </ul>
+  </li>
+  <li>Distance-weighed k-nearest neighbors (k-NN):
+    <ul>
+      <li>Closest one has more weight</li>
+      <li>Then, let’s use all examples instead of k-closest ones: but it is faster to work on k instances.</li>
+    </ul>
+  </li>
+  <li>Curse of dimensionality:
+    <ul>
+      <li>second biggest problem after overfitting</li>
+      <li>applies everywhere (decision trees, k-NN, etc.)</li>
+      <li>problems:
+        <ul>
+          <li>nearest neighbor is easily misled when hi-dim:</li>
+          <li>easy problems are hard in hi-dim:</li>
+          <li>low-dim intuitions don’t apply in hi-dim: hard to understand in hi-dim</li>
+          <li>e.g. normal distribution:
+            <ul>
+              <li>in 1d, most of the mass is around mean</li>
+              <li>in 2d, still some data is around mean</li>
+              <li>but it gets less and less…</li>
+              <li>hi-dim: most of the mass is far away from the mean.</li>
+            </ul>
+          </li>
+          <li>e.g. points on hypergrid: similarity, classes and nearest neighbors become meaningless
+            <ul>
+              <li>1d: equal length lines, 2 nearest neighbors</li>
+              <li>2d: 2d grid. 4 nearest neighbors</li>
+              <li>Nd: 2*N nearest neighbors.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Dealing with curse of dimensionality: get rid of some dimensions. called <em>feature selection</em>
+    <ul>
+      <li>Filter approach: linear operation that removes features. Very efficient.
+        <ul>
+          <li>e.g. by information gain</li>
+        </ul>
+      </li>
+      <li>Wrapper approach: run learner with different combinations of features
+        <ul>
+          <li>forward selection</li>
+          <li>backward elimination</li>
+          <li>etc.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Forward selection
+    <ul>
+      <li>Start with empty set of features and add useful ones one by one</li>
+      <li>When to stop: all features are in the set or adding a new feature doesn’t make the accuracy better</li>
+      <li>More efficient than backward elimination but there are disadvantages as well</li>
+    </ul>
+  </li>
+  <li>Backward elimination
+    <ul>
+      <li>Start with all features and remove useless ones one by one</li>
+    </ul>
+  </li>
+  <li>How to decide if a feature is useful or not:
+    <ul>
+      <li>how to not remove 100 less useful features when we have 1 very useful feature? 100 of them would make a big difference.</li>
+      <li><em>feature weighting</em> to the rescue!
+        <ul>
+          <li>Gradient descent is used for weighting the features. What weights give minimum error?</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>k-NN is said above that it needs all training instances. But that is costly. What to do for reducing computational cost?
+    <ul>
+      <li>Efficient retrieval:
+        <ul>
+          <li>come up with a good data structure that allows fast retrievel</li>
+          <li>e.g. k-D trees: good with low-dim</li>
+        </ul>
+      </li>
+      <li>Efficient similarity comparison: use cheap approximation to get rid of most of the instances and then do expensive measures on remainder</li>
+      <li>Form prototypes: Come up with prototypes for instances that cover them. Do not deal with details.</li>
+      <li>Edited k-NN: get rid of instances that do not change frontier (e.g. line between clusters).
+        <ul>
+          <li>This is actually SVM.</li>
+          <li>Doesn’t work good on hi-dim as most of the instances are very close to frontiers.</li>
+          <li>Then let’s do forward selection: e.g. bring instances one by one. if instance is classified by other examples already, ignore it.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Avoiding overfitting in k-NN:
+    <ul>
+      <li>simplest overfitting control parameter: k
+        <ul>
+          <li>big k: overfitting</li>
+          <li>finding best value of k: increase k on validation data (cross validation)</li>
+        </ul>
+      </li>
+      <li>form prototypes - similar to above.
+        <ul>
+          <li>have big clusters –&gt; less overfit</li>
+        </ul>
+      </li>
+      <li>remove noisy instances
+        <ul>
+          <li>e.g. if all nearest neighbors have the same class different than the instance, then it is noise</li>
+          <li>more sophisticated ways are available - of course</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="some-types-of-instance-based-learning">Some types of instance based learning</h4>
+<ul>
+  <li>Locally weighted regression:
+    <ul>
+      <li>Don’t do linear regression in advance</li>
+      <li>Do linear regression on nearest neighbors of new instance</li>
+      <li>Very cheap linear regression</li>
+      <li>This actually means we do piece-wise linear approximation to the curve (real function)</li>
+      <li>It will be slow on query time but not that slow since we do linear regression on k instances instead of millions</li>
+      <li>Quadratic or higher order regression is also possible</li>
+    </ul>
+  </li>
+  <li>Radial basis function networks
+    <ul>
+      <li>Global approximation to target function, in terms of linear combination of local approximations</li>
+      <li>Similar to locally weighted regression but eager instead of lazy</li>
+      <li>A different kind of neural network</li>
+    </ul>
+  </li>
+  <li>Case-based reasoning: a completely different instance based learning algorithm
+    <ul>
+      <li>Similar to help desks: this much RAM, this OS, ethernet connected; then the reason of the problem is XYZ</li>
+      <li>Distance measure: match qualitative function descriptions</li>
+    </ul>
+  </li>
+  <li>Collaborative filtering: AKA recommender systems
+    <ul>
+      <li>Predict if someone will like a website, movie etc.</li>
+      <li>Old approach: look at content of the website, movie etc. (is this an action movie etc.)</li>
+      <li>Collaborative filtering method:
+        <ul>
+          <li>Look at what similar users liked</li>
+          <li>Similar users == people with similar likes and dislikes</li>
+          <li>Rating prediction - parameters: (for movie M)
+            <ul>
+              <li>user’s average rating to movies</li>
+              <li>nearest neighbors’ rating on M</li>
+              <li>nearest neighbors’ average rating to movies</li>
+              <li>similarity to nearest neighbor –&gt; this is calculated as <em>Pearson coefficient</em></li>
+              <li>normalization</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="statistical-learning">Statistical learning</h1>
+
+<h4 id="bayesian-learning">Bayesian learning</h4>
+
+<ul>
+  <li>
+    <p>Bayes’ theorem:</p>
+
+    <table>
+      <tbody>
+        <tr>
+          <td>P(h</td>
+          <td>D) = P(D</td>
+          <td>h) P(h)  /  P(D)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <dl>
+      <dt>P(h)</dt>
+      <dd>prior probability of hypothesis h (e.g. you have cancer).</dd>
+      <dt>P(D)</dt>
+      <dd>prior prob of training data D (e.g. just previous experience = data)</dd>
+      <dt>P(h|D)</dt>
+      <dd>prob of h given D</dd>
+      <dt>P(D|h)</dt>
+      <dd>prob of D given h</dd>
+    </dl>
+  </li>
+</ul>
+
+<h4 id="map-learners-optimal-prediction">MAP learners (optimal prediction)</h4>
+
+<dl>
+  <dt>Maximum a priori</dt>
+  <dd>How much you believe in your hypothesis before you see any data?</dd>
+  <dt>Maximum a posteriori</dt>
+  <dd>(MAP) How well your hypothesis go with the data? Pick the maximum matching one.</dd>
+</dl>
+
+<ul>
+  <li>Brute force MAP Hypothesis Learners:
+    <ul>
+      <li>Calculate the posterior probability of all Hs and pick the one that has highest posterior probability</li>
+      <li>Suffers from overfitting. To overcome that, one can make use of priori knowledge.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="bayes-optimal-classifier">Bayes optimal classifier</h4>
+
+<ul>
+  <li>What happens when we received a new example to classify?
+    <ul>
+      <li>Given I have 3 hypotheses with p’s 0.4, 0.3 and 0.3</li>
+      <li>Tests against the h’s are +,- and -</li>
+      <li>MAP Hypothesis says it is +, but probability of -‘s are more</li>
+      <li>Correct class is -</li>
+    </ul>
+  </li>
+  <li>Bayes optimal classification is aware of this problem.
+    <ul>
+      <li>Test every hypothesis one by one and then basically find the most voted class.</li>
+      <li>However, Bayes optimal classifiers are not practical at all because it requires too much computational power</li>
+    </ul>
+  </li>
+  <li>Gibbs Classifier
+    <ul>
+      <li>Pick a random hypothesis but more likely hypotheses should have more probability to be picked</li>
+      <li>Use that to classify the instance</li>
+      <li>In worst case, has 2x error rate of the Bayes optimal classifier</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="naive-bayes-learner">Naive Bayes learner</h4>
+
+<ul>
+  <li>Very very naive thing. Just compute the product of the probabilities of (testExample|classValues). Pick the class that
+has max value.</li>
+  <li>It just works very well as a classifier. Assumes things are independent, thus random
+    <ul>
+      <li>The output probability value cannot be trusted. It is unrealistically close to 1 or 0.</li>
+      <li>Basically, it just says, “here is the class that has the highest probability.”</li>
+    </ul>
+  </li>
+  <li>What if one test example is not seen before? Multiplication with 0 will kill the product.
+    <ul>
+      <li>Use one of the smoothing techniques. Such as m-estimate</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="example-text-classification">Example: text classification</h4>
+
+<ul>
+  <li>Plain old naive bayes learner reaches very high success rates.
+    <ul>
+      <li>Examples: text being interesting or not, email being spam or not, text blongs to what news group</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="bayesian-networks">Bayesian networks</h4>
+
+<ul>
+  <li>Naive Bayes learners have big assumptions like things are independent</li>
+  <li>Bayesian networks are developed to overcome this problem
+    <ul>
+      <li>Limited amount of dependencies are allowed</li>
+      <li>Probability of something is basically just dependent on parents (think of a graph)</li>
+    </ul>
+  </li>
+  <li>BTW, Bayesian networks are not just classifiers: it computes the conditional probability of any variables in it
+    <ul>
+      <li>However, inference is NP-hard</li>
+      <li>For that there are some methods like Monte Carlo methods</li>
+    </ul>
+  </li>
+  <li>Learning Bayesian Networks
+    <ul>
+      <li>Variants:
+        <ul>
+          <li>Network structure is known or not</li>
+          <li>Is there missing data or not</li>
+        </ul>
+      </li>
+      <li>If structure is known and there is no missing data, it is es easy as training a Naive Bayes classifier
+        <ul>
+          <li>Then just look at the data and compute stuff</li>
+        </ul>
+      </li>
+      <li>If there are missing values, then EM is the way</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="em-learning">EM learning</h4>
+
+<ul>
+  <li>EM: Expectation Maximization</li>
+  <li>A general algorithm; is not only applicable to Bayesian networks</li>
+  <li>Solution for missing values in the training data</li>
+  <li>Until convergence:
+    <ul>
+      <li>Fill the network by doing inference and computing expected values</li>
+      <li>Calculate new parameter values to maximize probability</li>
+    </ul>
+  </li>
+  <li>It basically finds the local optima. But, sometimes local optima is not the global optima. Then you have a poor solution.
+    <ul>
+      <li>Some notes for getting better results:
+        <ul>
+          <li>Selecting the starting point is very important.</li>
+          <li>Some people run the algorithm multiple times for different starting points.</li>
+        </ul>
+      </li>
+      <li>You never know if your model is the best one (if your local optima is a global one)</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="learning-bayesian-network-structure">Learning Bayesian Network Structure</h4>
+
+<ul>
+  <li>What happens when network structure is unknown?</li>
+  <li>Structure search:
+    <ul>
+      <li>Start with an initial structure (empty network)</li>
+      <li>Add edges whenever you see data</li>
+      <li>…</li>
+      <li>Maximum likelihood: vulnerable to overfitting
+        <ul>
+          <li>It will result in a completely connected network</li>
+        </ul>
+      </li>
+      <li>Instead, use a prior which prefers smaller networks (less edges)</li>
+      <li>Or, draw the initial network manually if possible and then pass it to algorithm</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="structural-em-algorithm">Structural EM algorithm</h4>
+
+<ul>
+  <li>What if there is missing values in training data and the network structure is unknown?
+    <ul>
+      <li>Naive idea: do EM and structure search at the same time.</li>
+      <li>Not efficient at all.</li>
+    </ul>
+  </li>
+  <li>Structural EM: Do the structure search inside the EM, not vice versa.
+    <ul>
+      <li>Deep thing!</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="neural-networks">Neural networks</h1>
+
+<ul>
+  <li>Properties of a neural network:
+    <ul>
+      <li>Many neuron-like threshold switching units</li>
+      <li>Many weighted interconnections among units</li>
+      <li>Highly parallel, distributed process</li>
+      <li>Emphasis on tuning weights automatically: strength of connections tune automatically based on data</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="perceptrons">Perceptrons</h4>
+
+<ul>
+  <li>An old one.</li>
+  <li>Simulate single neuron
+    <ul>
+      <li>x0 is always 1; it acts as a threshold</li>
+    </ul>
+  </li>
+  <li>Cannot learn everything.
+    <ul>
+      <li>Can learn functions that have values linearly separable</li>
+      <li>Cannot learn, e.g. XOR function</li>
+    </ul>
+  </li>
+  <li>How to train a perceptron:
+    <ul>
+      <li>Just like a neuron: when you see something, the link (synapse) gets strengthened</li>
+      <li>However, it is error-driven. That means:
+        <ul>
+          <li>Don’t mess with weights when there is no error; namely perceptron output and target value is the same</li>
+          <li>Do increase/decrease weights when there is an error</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Perceptron training rules:
+    <ul>
+      <li>The learning rate must be sufficiently small. Too big: you learn to quick but wrong. Too small: you learn very slow.</li>
+      <li>Training data must be linearly separable: <strong>No noise allowed!</strong></li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="gradient-descent">Gradient descent</h4>
+
+<ul>
+  <li>Widely used</li>
+  <li>Finds the weights that minimizes the squared error
+    <ul>
+      <li>Take the steepest step that minimizes the squared error</li>
+      <li>Go until the optimum: where all the neighbors increase the squared error</li>
+    </ul>
+  </li>
+  <li>Difference from perceptron:
+    <ul>
+      <li>Works with noise as well and even when the training data is not linearly separable</li>
+      <li>There is no black-or-white; there is a continuous signal in terms of neuron output</li>
+    </ul>
+  </li>
+  <li>Batch vs. incremental
+    <ul>
+      <li>Batch: wait until all data is seen to update weights</li>
+      <li>Incremental: update weights when an example is seen</li>
+      <li>Similar to learning at night(batch) vs. learning during the day(incremental)</li>
+      <li>Incremental is much faster.</li>
+      <li>Incremental way doesn’t guarantee the global optimum, can be stuck in a local optimum.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="multilayer-networks">Multilayer networks</h4>
+
+<ul>
+  <li></li>
+</ul>
+
+<h4 id="backpropogation">Backpropogation</h4>
+
+<ul>
+  <li>Most popular algorithm for learning neural networks
+*</li>
+</ul>
+
+<p>TODO:</p>
+
+<ul>
+  <li>UWO MachLearning course</li>
+  <li>Stanford MachLearning course</li>
+  <li>Book: Algorithms of the Intelligent Web</li>
+  <li>Book: Lucene</li>
+  <li>Book: Lucene - SOLR, similar</li>
+  <li>Book: Hadoop</li>
+  <li>Book: Mahout</li>
+  <li>Book: Apache Spark, MLib</li>
+  <li>Try every single algorithm on Spark MLib</li>
+  <li>Book: Apache OpenNLP</li>
+  <li>Book: Scala</li>
+  <li>Titanic example with Spark</li>
+  <li>Other Kaggle projects</li>
+</ul>
+
+<h1 id="general-stuff">General stuff</h1>
+
+<h4 id="some-shared-stuff">Some shared stuff</h4>
+
+<dl>
+  <dt>Gaussian distribution</dt>
+  <dd>Normal distribution (the bell curve)</dd>
+</dl>
+
+<h4 id="probability-estimates-from-small-samples">Probability estimates from small samples</h4>
+
+<ul>
+  <li>Need smoothing. Two of the possible methods:
+    <ul>
+      <li>Laplace estimate</li>
+      <li>General prior estimate</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="lazy-methods">Lazy methods</h4>
+
+<p>Wait for query before generalizing:</p>
+
+<ul>
+  <li>k-NN, case-based reasoning</li>
+</ul>
+
+<h4 id="eager-methods">Eager methods</h4>
+
+<p>Generalize before seeing query:</p>
+
+<ul>
+  <li>ID3, FOIL, naive bayes, neural networks</li>
+</ul>
+
+<h4 id="noise">Noise</h4>
+
+<ul>
+  <li>When you believe the noise is Gaussian, then minimizing the sum of squared errors is a good way of 
+evaluating hypotheses to find the best hypothesis (not sure if it only applies to linear functions)</li>
+</ul>
+
+<h4 id="math">Math</h4>
+
+<ul>
+  <li>Never multiply probabilities. Log them and add them.</li>
+</ul>
+
+<style>
+/** Some special overrides for this page **/
+@media screen and (min-width: 1900px) {
+    blockquote{
+        color: inherit;
+        font-style: inherit;
+        letter-spacing:inherit;
+    }
+
+    dt{
+        width: 350px;
+    }
+
+    dd{
+        margin-left: 370px;
+    }
+}
+</style>
+
+
+
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'aliok'; // required: replace example with your forum shortname
+
+    if(window.location.hostname==="localhost"){
+        // do not add it
+    }
+    else {
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    }
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+</noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+  </article>
+
+</div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Ali Ok's personal notes</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>Ali Ok's personal notes</li>
+          <li><a href="mailto:aliok dOt apache DoT org">aliok dOt apache DoT org</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/aliok">
+              <span class="icon  icon--github">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+              </span>
+
+              <span class="username">aliok</span>
+            </a>
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/aliok_tr">
+              <span class="icon  icon--twitter">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                  c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+                </svg>
+              </span>
+
+              <span class="username">aliok_tr</span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text"><p>Check out my <a href="http://www.aliok.com.tr">website</a></p>
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-55426410-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</html>
