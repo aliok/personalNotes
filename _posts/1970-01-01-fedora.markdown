@@ -34,40 +34,8 @@ DefaultSession=gnome-xorg.desktop
 
 (ref: https://ask.fedoraproject.org/en/question/96134/how-can-i-set-xorg-as-a-default-on-fedora-25/)
 
-Then, use these xmapmod settings:
-```
-! remove existing mappings for meta key
-remove mod1 = Meta_L
+#### Original mappings:
 
-! remove all mappings for win key (super)
-remove mod5 = Super_L Super_R
-remove mod4 = Super_L Super_R
-remove mod3 = Super_L Super_R
-remove mod2 = Super_L Super_R
-remove mod1 = Super_L Super_R
-
-! remove mapping for left alt
-remove mod1 = Alt_L
-
-! remove mapping for right alt
-remove mod1 = Alt_R
-
-! swap alt and win key (physical keys)
-keycode 133 = Alt_L
-keycode 64 = Meta_L
-
-! make physical Alt_R key to act like Super_R
-keycode 108 = Super_R
-
-! add new meta key to meta, new alt key to alt
-add mod4 = Meta_L
-add mod1 = Alt_L
-
-! add Super_R to mod4
-add mod4 =  Super_R
-```
-
-This is the mapping before:
 ```
 [aliok@localhost ~]$ xmodmap
 xmodmap:  up to 4 keys per modifier, (keycodes in parentheses):
@@ -77,25 +45,905 @@ lock        Caps_Lock (0x42)
 control     Control_L (0x25),  Control_R (0x69)
 mod1        Alt_L (0x40),  Alt_R (0x6c),  Meta_L (0xcd)
 mod2        Num_Lock (0x4d)
-mod3
+mod3      
 mod4        Super_L (0x85),  Super_R (0x86),  Super_L (0xce),  Hyper_L (0xcf)
 mod5        ISO_Level3_Shift (0x5c),  Mode_switch (0xcb)
 ```
 
-This is the mapping after:
+and
+
+```
+[aliok@localhost ~]$ xmodmap -pke
+keycode   8 =
+keycode   9 = Escape NoSymbol Escape
+keycode  10 = 1 exclam 1 exclam
+keycode  11 = 2 at 2 at
+keycode  12 = 3 numbersign 3 numbersign
+keycode  13 = 4 dollar 4 dollar
+keycode  14 = 5 percent 5 percent
+keycode  15 = 6 asciicircum 6 asciicircum
+keycode  16 = 7 ampersand 7 ampersand
+keycode  17 = 8 asterisk 8 asterisk
+keycode  18 = 9 parenleft 9 parenleft
+keycode  19 = 0 parenright 0 parenright
+keycode  20 = minus underscore minus underscore
+keycode  21 = equal plus equal plus
+keycode  22 = BackSpace BackSpace BackSpace BackSpace
+keycode  23 = Tab ISO_Left_Tab Tab ISO_Left_Tab
+keycode  24 = q Q q Q
+keycode  25 = w W w W
+keycode  26 = e E e E
+keycode  27 = r R r R
+keycode  28 = t T t T
+keycode  29 = y Y y Y
+keycode  30 = u U u U
+keycode  31 = i I i I
+keycode  32 = o O o O
+keycode  33 = p P p P
+keycode  34 = bracketleft braceleft bracketleft braceleft
+keycode  35 = bracketright braceright bracketright braceright
+keycode  36 = Return NoSymbol Return
+keycode  37 = Control_L NoSymbol Control_L
+keycode  38 = a A a A
+keycode  39 = s S s S
+keycode  40 = d D d D
+keycode  41 = f F f F
+keycode  42 = g G g G
+keycode  43 = h H h H
+keycode  44 = j J j J
+keycode  45 = k K k K
+keycode  46 = l L l L
+keycode  47 = semicolon colon semicolon colon
+keycode  48 = apostrophe quotedbl apostrophe quotedbl
+keycode  49 = grave asciitilde grave asciitilde
+keycode  50 = Shift_L NoSymbol Shift_L
+keycode  51 = backslash bar backslash bar
+keycode  52 = z Z z Z
+keycode  53 = x X x X
+keycode  54 = c C c C
+keycode  55 = v V v V
+keycode  56 = b B b B
+keycode  57 = n N n N
+keycode  58 = m M m M
+keycode  59 = comma less comma less
+keycode  60 = period greater period greater
+keycode  61 = slash question slash question
+keycode  62 = Shift_R NoSymbol Shift_R
+keycode  63 = KP_Multiply KP_Multiply KP_Multiply KP_Multiply KP_Multiply KP_Multiply XF86ClearGrab
+keycode  64 = Alt_L Meta_L Alt_L Meta_L
+keycode  65 = space NoSymbol space
+keycode  66 = Caps_Lock NoSymbol Caps_Lock
+keycode  67 = F1 F1 F1 F1 F1 F1 XF86Switch_VT_1
+keycode  68 = F2 F2 F2 F2 F2 F2 XF86Switch_VT_2
+keycode  69 = F3 F3 F3 F3 F3 F3 XF86Switch_VT_3
+keycode  70 = F4 F4 F4 F4 F4 F4 XF86Switch_VT_4
+keycode  71 = F5 F5 F5 F5 F5 F5 XF86Switch_VT_5
+keycode  72 = F6 F6 F6 F6 F6 F6 XF86Switch_VT_6
+keycode  73 = F7 F7 F7 F7 F7 F7 XF86Switch_VT_7
+keycode  74 = F8 F8 F8 F8 F8 F8 XF86Switch_VT_8
+keycode  75 = F9 F9 F9 F9 F9 F9 XF86Switch_VT_9
+keycode  76 = F10 F10 F10 F10 F10 F10 XF86Switch_VT_10
+keycode  77 = Num_Lock NoSymbol Num_Lock
+keycode  78 = Scroll_Lock NoSymbol Scroll_Lock
+keycode  79 = KP_Home KP_7 KP_Home KP_7
+keycode  80 = KP_Up KP_8 KP_Up KP_8
+keycode  81 = KP_Prior KP_9 KP_Prior KP_9
+keycode  82 = KP_Subtract KP_Subtract KP_Subtract KP_Subtract KP_Subtract KP_Subtract XF86Prev_VMode
+keycode  83 = KP_Left KP_4 KP_Left KP_4
+keycode  84 = KP_Begin KP_5 KP_Begin KP_5
+keycode  85 = KP_Right KP_6 KP_Right KP_6
+keycode  86 = KP_Add KP_Add KP_Add KP_Add KP_Add KP_Add XF86Next_VMode
+keycode  87 = KP_End KP_1 KP_End KP_1
+keycode  88 = KP_Down KP_2 KP_Down KP_2
+keycode  89 = KP_Next KP_3 KP_Next KP_3
+keycode  90 = KP_Insert KP_0 KP_Insert KP_0
+keycode  91 = KP_Delete KP_Decimal KP_Delete KP_Decimal
+keycode  92 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
+keycode  93 =
+keycode  94 = less greater less greater bar brokenbar bar
+keycode  95 = F11 F11 F11 F11 F11 F11 XF86Switch_VT_11
+keycode  96 = F12 F12 F12 F12 F12 F12 XF86Switch_VT_12
+keycode  97 =
+keycode  98 = Katakana NoSymbol Katakana
+keycode  99 = Hiragana NoSymbol Hiragana
+keycode 100 = Henkan_Mode NoSymbol Henkan_Mode
+keycode 101 = Hiragana_Katakana NoSymbol Hiragana_Katakana
+keycode 102 = Muhenkan NoSymbol Muhenkan
+keycode 103 =
+keycode 104 = KP_Enter NoSymbol KP_Enter
+keycode 105 = Control_R NoSymbol Control_R
+keycode 106 = KP_Divide KP_Divide KP_Divide KP_Divide KP_Divide KP_Divide XF86Ungrab
+keycode 107 = Print Sys_Req Print Sys_Req
+keycode 108 = Alt_R Meta_R Alt_R Meta_R
+keycode 109 = Linefeed NoSymbol Linefeed
+keycode 110 = Home NoSymbol Home
+keycode 111 = Up NoSymbol Up
+keycode 112 = Prior NoSymbol Prior
+keycode 113 = Left NoSymbol Left
+keycode 114 = Right NoSymbol Right
+keycode 115 = End NoSymbol End
+keycode 116 = Down NoSymbol Down
+keycode 117 = Next NoSymbol Next
+keycode 118 = Insert NoSymbol Insert
+keycode 119 = Delete NoSymbol Delete
+keycode 120 =
+keycode 121 = XF86AudioMute NoSymbol XF86AudioMute
+keycode 122 = XF86AudioLowerVolume NoSymbol XF86AudioLowerVolume
+keycode 123 = XF86AudioRaiseVolume NoSymbol XF86AudioRaiseVolume
+keycode 124 = XF86PowerOff NoSymbol XF86PowerOff
+keycode 125 = KP_Equal NoSymbol KP_Equal
+keycode 126 = plusminus NoSymbol plusminus
+keycode 127 = Pause Break Pause Break
+keycode 128 = XF86LaunchA NoSymbol XF86LaunchA
+keycode 129 = KP_Decimal KP_Decimal KP_Decimal KP_Decimal
+keycode 130 = Hangul NoSymbol Hangul
+keycode 131 = Hangul_Hanja NoSymbol Hangul_Hanja
+keycode 132 =
+keycode 133 = Super_L NoSymbol Super_L
+keycode 134 = Super_R NoSymbol Super_R
+keycode 135 = Menu NoSymbol Menu
+keycode 136 = Cancel NoSymbol Cancel
+keycode 137 = Redo NoSymbol Redo
+keycode 138 = SunProps NoSymbol SunProps
+keycode 139 = Undo NoSymbol Undo
+keycode 140 = SunFront NoSymbol SunFront
+keycode 141 = XF86Copy NoSymbol XF86Copy
+keycode 142 = XF86Open NoSymbol XF86Open
+keycode 143 = XF86Paste NoSymbol XF86Paste
+keycode 144 = Find NoSymbol Find
+keycode 145 = XF86Cut NoSymbol XF86Cut
+keycode 146 = Help NoSymbol Help
+keycode 147 = XF86MenuKB NoSymbol XF86MenuKB
+keycode 148 = XF86Calculator NoSymbol XF86Calculator
+keycode 149 =
+keycode 150 = XF86Sleep NoSymbol XF86Sleep
+keycode 151 = XF86WakeUp NoSymbol XF86WakeUp
+keycode 152 = XF86Explorer NoSymbol XF86Explorer
+keycode 153 = XF86Send NoSymbol XF86Send
+keycode 154 =
+keycode 155 = XF86Xfer NoSymbol XF86Xfer
+keycode 156 = XF86Launch1 NoSymbol XF86Launch1
+keycode 157 = XF86Launch2 NoSymbol XF86Launch2
+keycode 158 = XF86WWW NoSymbol XF86WWW
+keycode 159 = XF86DOS NoSymbol XF86DOS
+keycode 160 = XF86ScreenSaver NoSymbol XF86ScreenSaver
+keycode 161 = XF86RotateWindows NoSymbol XF86RotateWindows
+keycode 162 = XF86TaskPane NoSymbol XF86TaskPane
+keycode 163 = XF86Mail NoSymbol XF86Mail
+keycode 164 = XF86Favorites NoSymbol XF86Favorites
+keycode 165 = XF86MyComputer NoSymbol XF86MyComputer
+keycode 166 = XF86Back NoSymbol XF86Back
+keycode 167 = XF86Forward NoSymbol XF86Forward
+keycode 168 =
+keycode 169 = XF86Eject NoSymbol XF86Eject
+keycode 170 = XF86Eject XF86Eject XF86Eject XF86Eject
+keycode 171 = XF86AudioNext NoSymbol XF86AudioNext
+keycode 172 = XF86AudioPlay XF86AudioPause XF86AudioPlay XF86AudioPause
+keycode 173 = XF86AudioPrev NoSymbol XF86AudioPrev
+keycode 174 = XF86AudioStop XF86Eject XF86AudioStop XF86Eject
+keycode 175 = XF86AudioRecord NoSymbol XF86AudioRecord
+keycode 176 = XF86AudioRewind NoSymbol XF86AudioRewind
+keycode 177 = XF86Phone NoSymbol XF86Phone
+keycode 178 =
+keycode 179 = XF86Tools NoSymbol XF86Tools
+keycode 180 = XF86HomePage NoSymbol XF86HomePage
+keycode 181 = XF86Reload NoSymbol XF86Reload
+keycode 182 = XF86Close NoSymbol XF86Close
+keycode 183 =
+keycode 184 =
+keycode 185 = XF86ScrollUp NoSymbol XF86ScrollUp
+keycode 186 = XF86ScrollDown NoSymbol XF86ScrollDown
+keycode 187 = parenleft NoSymbol parenleft
+keycode 188 = parenright NoSymbol parenright
+keycode 189 = XF86New NoSymbol XF86New
+keycode 190 = Redo NoSymbol Redo
+keycode 191 = XF86Tools NoSymbol XF86Tools
+keycode 192 = XF86Launch5 NoSymbol XF86Launch5
+keycode 193 = XF86Launch6 NoSymbol XF86Launch6
+keycode 194 = XF86Launch7 NoSymbol XF86Launch7
+keycode 195 = XF86Launch8 NoSymbol XF86Launch8
+keycode 196 = XF86Launch9 NoSymbol XF86Launch9
+keycode 197 =
+keycode 198 = XF86AudioMicMute NoSymbol XF86AudioMicMute
+keycode 199 = XF86TouchpadToggle NoSymbol XF86TouchpadToggle
+keycode 200 = XF86TouchpadOn NoSymbol XF86TouchpadOn
+keycode 201 = XF86TouchpadOff NoSymbol XF86TouchpadOff
+keycode 202 =
+keycode 203 = Mode_switch NoSymbol Mode_switch
+keycode 204 = NoSymbol Alt_L NoSymbol Alt_L
+keycode 205 = NoSymbol Meta_L NoSymbol Meta_L
+keycode 206 = NoSymbol Super_L NoSymbol Super_L
+keycode 207 = NoSymbol Hyper_L NoSymbol Hyper_L
+keycode 208 = XF86AudioPlay NoSymbol XF86AudioPlay
+keycode 209 = XF86AudioPause NoSymbol XF86AudioPause
+keycode 210 = XF86Launch3 NoSymbol XF86Launch3
+keycode 211 = XF86Launch4 NoSymbol XF86Launch4
+keycode 212 = XF86LaunchB NoSymbol XF86LaunchB
+keycode 213 = XF86Suspend NoSymbol XF86Suspend
+keycode 214 = XF86Close NoSymbol XF86Close
+keycode 215 = XF86AudioPlay NoSymbol XF86AudioPlay
+keycode 216 = XF86AudioForward NoSymbol XF86AudioForward
+keycode 217 =
+keycode 218 = Print NoSymbol Print
+keycode 219 =
+keycode 220 = XF86WebCam NoSymbol XF86WebCam
+keycode 221 = XF86AudioPreset NoSymbol XF86AudioPreset
+keycode 222 =
+keycode 223 = XF86Mail NoSymbol XF86Mail
+keycode 224 = XF86Messenger NoSymbol XF86Messenger
+keycode 225 = XF86Search NoSymbol XF86Search
+keycode 226 = XF86Go NoSymbol XF86Go
+keycode 227 = XF86Finance NoSymbol XF86Finance
+keycode 228 = XF86Game NoSymbol XF86Game
+keycode 229 = XF86Shop NoSymbol XF86Shop
+keycode 230 =
+keycode 231 = Cancel NoSymbol Cancel
+keycode 232 = XF86MonBrightnessDown NoSymbol XF86MonBrightnessDown
+keycode 233 = XF86MonBrightnessUp NoSymbol XF86MonBrightnessUp
+keycode 234 = XF86AudioMedia NoSymbol XF86AudioMedia
+keycode 235 = XF86Display NoSymbol XF86Display
+keycode 236 = XF86KbdLightOnOff NoSymbol XF86KbdLightOnOff
+keycode 237 = XF86KbdBrightnessDown NoSymbol XF86KbdBrightnessDown
+keycode 238 = XF86KbdBrightnessUp NoSymbol XF86KbdBrightnessUp
+keycode 239 = XF86Send NoSymbol XF86Send
+keycode 240 = XF86Reply NoSymbol XF86Reply
+keycode 241 = XF86MailForward NoSymbol XF86MailForward
+keycode 242 = XF86Save NoSymbol XF86Save
+keycode 243 = XF86Documents NoSymbol XF86Documents
+keycode 244 = XF86Battery NoSymbol XF86Battery
+keycode 245 = XF86Bluetooth NoSymbol XF86Bluetooth
+keycode 246 = XF86WLAN NoSymbol XF86WLAN
+keycode 247 = XF86UWB NoSymbol XF86UWB
+keycode 248 =
+keycode 249 =
+keycode 250 =
+keycode 251 =
+keycode 252 =
+keycode 253 =
+keycode 254 = XF86WWAN NoSymbol XF86WWAN
+keycode 255 = XF86RFKill NoSymbol XF86RFKill
+```
+
+#### Apple Keyboard
+
+**~/.Xmodmap_appleKeyboard**
+```
+! all keys: Alt_L Alt_R Meta_L Meta_R Super_L Super_R Control_L Control_R Hyper_L Hyper_R
+
+! pyhsical keys:
+! 108: Alt_R
+! 134: Cmd_R
+!  64: Alt_L
+! 133: Cmd_L
+! 204: don't know, but assigned to Alt_L as another key by default
+! 205: don't know, but assigned to Meta_L by default
+! 206: don't know, but assigned to Super_L by default
+! 207: don't know, but assigned to Hyper_L by default
+
+! relevant mods:
+! mod1: alt
+! mod4: super
+
+! clear relevant mods
+clear mod1
+clear mod4
+
+! clear assignments for physical keys that I don't know
+! keycode 204 = NoSymbol
+! keycode 205 = NoSymbol
+! keycode 206 = NoSymbol
+! keycode 207 = NoSymbol
+
+! make sure keycode 108 (pyhsical Alt_R key) is set to Meta_R and Alt_R
+keycode 108 = Meta_R
+! make sure keycode 134 (pyhsical Cmd_R key) is set to Super_R
+keycode 134 = Super_R
+
+! -------------------------
+
+! remove Meta_L assignment from physical Alt_L key.
+keycode 64 = Alt_L
+		
+! assign physical Cmd_L key to Meta_L
+keycode 133 = Meta_L
+
+
+! -------------------------
+
+! make Alt_L the Alt mod
+add mod1 = Alt_L
+! make Cmd_L the Super mod
+add mod4 = Meta_L
+```
+
+
+Result:
+
 ```
 [aliok@localhost ~]$ xmodmap
-xmodmap:  up to 3 keys per modifier, (keycodes in parentheses):
+xmodmap:  up to 2 keys per modifier, (keycodes in parentheses):
 
+shift       Shift_L (0x32),  Shift_R (0x3e)
+lock        Caps_Lock (0x42)
+control     Control_L (0x25),  Control_R (0x69)
+mod1        Alt_L (0x40),  Alt_L (0xcc)
+mod2        Num_Lock (0x4d)
+mod3      
+mod4        Meta_L (0x85),  Meta_L (0xcd)
+mod5        ISO_Level3_Shift (0x5c),  Mode_switch (0xcb)
+```
+
+and
+
+```
+[aliok@localhost ~]$ xmodmap -pke
+keycode   8 =
+keycode   9 = Escape NoSymbol Escape
+keycode  10 = 1 exclam 1 exclam
+keycode  11 = 2 at 2 at
+keycode  12 = 3 numbersign 3 numbersign
+keycode  13 = 4 dollar 4 dollar
+keycode  14 = 5 percent 5 percent
+keycode  15 = 6 asciicircum 6 asciicircum
+keycode  16 = 7 ampersand 7 ampersand
+keycode  17 = 8 asterisk 8 asterisk
+keycode  18 = 9 parenleft 9 parenleft
+keycode  19 = 0 parenright 0 parenright
+keycode  20 = minus underscore minus underscore
+keycode  21 = equal plus equal plus
+keycode  22 = BackSpace BackSpace BackSpace BackSpace
+keycode  23 = Tab ISO_Left_Tab Tab ISO_Left_Tab
+keycode  24 = q Q q Q
+keycode  25 = w W w W
+keycode  26 = e E e E
+keycode  27 = r R r R
+keycode  28 = t T t T
+keycode  29 = y Y y Y
+keycode  30 = u U u U
+keycode  31 = i I i I
+keycode  32 = o O o O
+keycode  33 = p P p P
+keycode  34 = bracketleft braceleft bracketleft braceleft
+keycode  35 = bracketright braceright bracketright braceright
+keycode  36 = Return NoSymbol Return
+keycode  37 = Control_L NoSymbol Control_L
+keycode  38 = a A a A
+keycode  39 = s S s S
+keycode  40 = d D d D
+keycode  41 = f F f F
+keycode  42 = g G g G
+keycode  43 = h H h H
+keycode  44 = j J j J
+keycode  45 = k K k K
+keycode  46 = l L l L
+keycode  47 = semicolon colon semicolon colon
+keycode  48 = apostrophe quotedbl apostrophe quotedbl
+keycode  49 = grave asciitilde grave asciitilde
+keycode  50 = Shift_L NoSymbol Shift_L
+keycode  51 = backslash bar backslash bar
+keycode  52 = z Z z Z
+keycode  53 = x X x X
+keycode  54 = c C c C
+keycode  55 = v V v V
+keycode  56 = b B b B
+keycode  57 = n N n N
+keycode  58 = m M m M
+keycode  59 = comma less comma less
+keycode  60 = period greater period greater
+keycode  61 = slash question slash question
+keycode  62 = Shift_R NoSymbol Shift_R
+keycode  63 = KP_Multiply KP_Multiply KP_Multiply KP_Multiply KP_Multiply KP_Multiply XF86ClearGrab
+keycode  64 = Alt_L NoSymbol Alt_L
+keycode  65 = space NoSymbol space
+keycode  66 = Caps_Lock NoSymbol Caps_Lock
+keycode  67 = F1 F1 F1 F1 F1 F1 XF86Switch_VT_1
+keycode  68 = F2 F2 F2 F2 F2 F2 XF86Switch_VT_2
+keycode  69 = F3 F3 F3 F3 F3 F3 XF86Switch_VT_3
+keycode  70 = F4 F4 F4 F4 F4 F4 XF86Switch_VT_4
+keycode  71 = F5 F5 F5 F5 F5 F5 XF86Switch_VT_5
+keycode  72 = F6 F6 F6 F6 F6 F6 XF86Switch_VT_6
+keycode  73 = F7 F7 F7 F7 F7 F7 XF86Switch_VT_7
+keycode  74 = F8 F8 F8 F8 F8 F8 XF86Switch_VT_8
+keycode  75 = F9 F9 F9 F9 F9 F9 XF86Switch_VT_9
+keycode  76 = F10 F10 F10 F10 F10 F10 XF86Switch_VT_10
+keycode  77 = Num_Lock NoSymbol Num_Lock
+keycode  78 = Scroll_Lock NoSymbol Scroll_Lock
+keycode  79 = KP_Home KP_7 KP_Home KP_7
+keycode  80 = KP_Up KP_8 KP_Up KP_8
+keycode  81 = KP_Prior KP_9 KP_Prior KP_9
+keycode  82 = KP_Subtract KP_Subtract KP_Subtract KP_Subtract KP_Subtract KP_Subtract XF86Prev_VMode
+keycode  83 = KP_Left KP_4 KP_Left KP_4
+keycode  84 = KP_Begin KP_5 KP_Begin KP_5
+keycode  85 = KP_Right KP_6 KP_Right KP_6
+keycode  86 = KP_Add KP_Add KP_Add KP_Add KP_Add KP_Add XF86Next_VMode
+keycode  87 = KP_End KP_1 KP_End KP_1
+keycode  88 = KP_Down KP_2 KP_Down KP_2
+keycode  89 = KP_Next KP_3 KP_Next KP_3
+keycode  90 = KP_Insert KP_0 KP_Insert KP_0
+keycode  91 = KP_Delete KP_Decimal KP_Delete KP_Decimal
+keycode  92 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
+keycode  93 =
+keycode  94 = less greater less greater bar brokenbar bar
+keycode  95 = F11 F11 F11 F11 F11 F11 XF86Switch_VT_11
+keycode  96 = F12 F12 F12 F12 F12 F12 XF86Switch_VT_12
+keycode  97 =
+keycode  98 = Katakana NoSymbol Katakana
+keycode  99 = Hiragana NoSymbol Hiragana
+keycode 100 = Henkan_Mode NoSymbol Henkan_Mode
+keycode 101 = Hiragana_Katakana NoSymbol Hiragana_Katakana
+keycode 102 = Muhenkan NoSymbol Muhenkan
+keycode 103 =
+keycode 104 = KP_Enter NoSymbol KP_Enter
+keycode 105 = Control_R NoSymbol Control_R
+keycode 106 = KP_Divide KP_Divide KP_Divide KP_Divide KP_Divide KP_Divide XF86Ungrab
+keycode 107 = Print Sys_Req Print Sys_Req
+keycode 108 = Meta_R NoSymbol Meta_R
+keycode 109 = Linefeed NoSymbol Linefeed
+keycode 110 = Home NoSymbol Home
+keycode 111 = Up NoSymbol Up
+keycode 112 = Prior NoSymbol Prior
+keycode 113 = Left NoSymbol Left
+keycode 114 = Right NoSymbol Right
+keycode 115 = End NoSymbol End
+keycode 116 = Down NoSymbol Down
+keycode 117 = Next NoSymbol Next
+keycode 118 = Insert NoSymbol Insert
+keycode 119 = Delete NoSymbol Delete
+keycode 120 =
+keycode 121 = XF86AudioMute NoSymbol XF86AudioMute
+keycode 122 = XF86AudioLowerVolume NoSymbol XF86AudioLowerVolume
+keycode 123 = XF86AudioRaiseVolume NoSymbol XF86AudioRaiseVolume
+keycode 124 = XF86PowerOff NoSymbol XF86PowerOff
+keycode 125 = KP_Equal NoSymbol KP_Equal
+keycode 126 = plusminus NoSymbol plusminus
+keycode 127 = Pause Break Pause Break
+keycode 128 = XF86LaunchA NoSymbol XF86LaunchA
+keycode 129 = KP_Decimal KP_Decimal KP_Decimal KP_Decimal
+keycode 130 = Hangul NoSymbol Hangul
+keycode 131 = Hangul_Hanja NoSymbol Hangul_Hanja
+keycode 132 =
+keycode 133 = Meta_L NoSymbol Meta_L
+keycode 134 = Super_R NoSymbol Super_R
+keycode 135 = Menu NoSymbol Menu
+keycode 136 = Cancel NoSymbol Cancel
+keycode 137 = Redo NoSymbol Redo
+keycode 138 = SunProps NoSymbol SunProps
+keycode 139 = Undo NoSymbol Undo
+keycode 140 = SunFront NoSymbol SunFront
+keycode 141 = XF86Copy NoSymbol XF86Copy
+keycode 142 = XF86Open NoSymbol XF86Open
+keycode 143 = XF86Paste NoSymbol XF86Paste
+keycode 144 = Find NoSymbol Find
+keycode 145 = XF86Cut NoSymbol XF86Cut
+keycode 146 = Help NoSymbol Help
+keycode 147 = XF86MenuKB NoSymbol XF86MenuKB
+keycode 148 = XF86Calculator NoSymbol XF86Calculator
+keycode 149 =
+keycode 150 = XF86Sleep NoSymbol XF86Sleep
+keycode 151 = XF86WakeUp NoSymbol XF86WakeUp
+keycode 152 = XF86Explorer NoSymbol XF86Explorer
+keycode 153 = XF86Send NoSymbol XF86Send
+keycode 154 =
+keycode 155 = XF86Xfer NoSymbol XF86Xfer
+keycode 156 = XF86Launch1 NoSymbol XF86Launch1
+keycode 157 = XF86Launch2 NoSymbol XF86Launch2
+keycode 158 = XF86WWW NoSymbol XF86WWW
+keycode 159 = XF86DOS NoSymbol XF86DOS
+keycode 160 = XF86ScreenSaver NoSymbol XF86ScreenSaver
+keycode 161 = XF86RotateWindows NoSymbol XF86RotateWindows
+keycode 162 = XF86TaskPane NoSymbol XF86TaskPane
+keycode 163 = XF86Mail NoSymbol XF86Mail
+keycode 164 = XF86Favorites NoSymbol XF86Favorites
+keycode 165 = XF86MyComputer NoSymbol XF86MyComputer
+keycode 166 = XF86Back NoSymbol XF86Back
+keycode 167 = XF86Forward NoSymbol XF86Forward
+keycode 168 =
+keycode 169 = XF86Eject NoSymbol XF86Eject
+keycode 170 = XF86Eject XF86Eject XF86Eject XF86Eject
+keycode 171 = XF86AudioNext NoSymbol XF86AudioNext
+keycode 172 = XF86AudioPlay XF86AudioPause XF86AudioPlay XF86AudioPause
+keycode 173 = XF86AudioPrev NoSymbol XF86AudioPrev
+keycode 174 = XF86AudioStop XF86Eject XF86AudioStop XF86Eject
+keycode 175 = XF86AudioRecord NoSymbol XF86AudioRecord
+keycode 176 = XF86AudioRewind NoSymbol XF86AudioRewind
+keycode 177 = XF86Phone NoSymbol XF86Phone
+keycode 178 =
+keycode 179 = XF86Tools NoSymbol XF86Tools
+keycode 180 = XF86HomePage NoSymbol XF86HomePage
+keycode 181 = XF86Reload NoSymbol XF86Reload
+keycode 182 = XF86Close NoSymbol XF86Close
+keycode 183 =
+keycode 184 =
+keycode 185 = XF86ScrollUp NoSymbol XF86ScrollUp
+keycode 186 = XF86ScrollDown NoSymbol XF86ScrollDown
+keycode 187 = parenleft NoSymbol parenleft
+keycode 188 = parenright NoSymbol parenright
+keycode 189 = XF86New NoSymbol XF86New
+keycode 190 = Redo NoSymbol Redo
+keycode 191 = XF86Tools NoSymbol XF86Tools
+keycode 192 = XF86Launch5 NoSymbol XF86Launch5
+keycode 193 = XF86Launch6 NoSymbol XF86Launch6
+keycode 194 = XF86Launch7 NoSymbol XF86Launch7
+keycode 195 = XF86Launch8 NoSymbol XF86Launch8
+keycode 196 = XF86Launch9 NoSymbol XF86Launch9
+keycode 197 =
+keycode 198 = XF86AudioMicMute NoSymbol XF86AudioMicMute
+keycode 199 = XF86TouchpadToggle NoSymbol XF86TouchpadToggle
+keycode 200 = XF86TouchpadOn NoSymbol XF86TouchpadOn
+keycode 201 = XF86TouchpadOff NoSymbol XF86TouchpadOff
+keycode 202 =
+keycode 203 = Mode_switch NoSymbol Mode_switch
+keycode 204 = NoSymbol Alt_L NoSymbol Alt_L
+keycode 205 = NoSymbol Meta_L NoSymbol Meta_L
+keycode 206 = NoSymbol Super_L NoSymbol Super_L
+keycode 207 = NoSymbol Hyper_L NoSymbol Hyper_L
+keycode 208 = XF86AudioPlay NoSymbol XF86AudioPlay
+keycode 209 = XF86AudioPause NoSymbol XF86AudioPause
+keycode 210 = XF86Launch3 NoSymbol XF86Launch3
+keycode 211 = XF86Launch4 NoSymbol XF86Launch4
+keycode 212 = XF86LaunchB NoSymbol XF86LaunchB
+keycode 213 = XF86Suspend NoSymbol XF86Suspend
+keycode 214 = XF86Close NoSymbol XF86Close
+keycode 215 = XF86AudioPlay NoSymbol XF86AudioPlay
+keycode 216 = XF86AudioForward NoSymbol XF86AudioForward
+keycode 217 =
+keycode 218 = Print NoSymbol Print
+keycode 219 =
+keycode 220 = XF86WebCam NoSymbol XF86WebCam
+keycode 221 = XF86AudioPreset NoSymbol XF86AudioPreset
+keycode 222 =
+keycode 223 = XF86Mail NoSymbol XF86Mail
+keycode 224 = XF86Messenger NoSymbol XF86Messenger
+keycode 225 = XF86Search NoSymbol XF86Search
+keycode 226 = XF86Go NoSymbol XF86Go
+keycode 227 = XF86Finance NoSymbol XF86Finance
+keycode 228 = XF86Game NoSymbol XF86Game
+keycode 229 = XF86Shop NoSymbol XF86Shop
+keycode 230 =
+keycode 231 = Cancel NoSymbol Cancel
+keycode 232 = XF86MonBrightnessDown NoSymbol XF86MonBrightnessDown
+keycode 233 = XF86MonBrightnessUp NoSymbol XF86MonBrightnessUp
+keycode 234 = XF86AudioMedia NoSymbol XF86AudioMedia
+keycode 235 = XF86Display NoSymbol XF86Display
+keycode 236 = XF86KbdLightOnOff NoSymbol XF86KbdLightOnOff
+keycode 237 = XF86KbdBrightnessDown NoSymbol XF86KbdBrightnessDown
+keycode 238 = XF86KbdBrightnessUp NoSymbol XF86KbdBrightnessUp
+keycode 239 = XF86Send NoSymbol XF86Send
+keycode 240 = XF86Reply NoSymbol XF86Reply
+keycode 241 = XF86MailForward NoSymbol XF86MailForward
+keycode 242 = XF86Save NoSymbol XF86Save
+keycode 243 = XF86Documents NoSymbol XF86Documents
+keycode 244 = XF86Battery NoSymbol XF86Battery
+keycode 245 = XF86Bluetooth NoSymbol XF86Bluetooth
+keycode 246 = XF86WLAN NoSymbol XF86WLAN
+keycode 247 = XF86UWB NoSymbol XF86UWB
+keycode 248 =
+keycode 249 =
+keycode 250 =
+keycode 251 =
+keycode 252 =
+keycode 253 =
+keycode 254 = XF86WWAN NoSymbol XF86WWAN
+keycode 255 = XF86RFKill NoSymbol XF86RFKill
+```
+
+#### Laptop keyboard
+
+**~/.Xmodmap_laptopKeyboard**
+```
+! all keys: Alt_L Alt_R Meta_L Meta_R Super_L Super_R Control_L Control_R Hyper_L Hyper_R
+
+! pyhsical keys:
+! 108: Alt_R
+!  64: Alt_L
+! 133: Win_L
+! 204: don't know, but assigned to Alt_L as another key by default
+! 205: don't know, but assigned to Meta_L by default
+! 206: don't know, but assigned to Super_L by default
+! 207: don't know, but assigned to Hyper_L by default
+
+! relevant mods:
+! mod1: alt
+! mod4: super
+
+! clear relevant mods
+clear mod1
+clear mod4
+
+
+! clear assignments for physical keys that I don't know
+! keycode 204 = NoSymbol
+! keycode 205 = NoSymbol
+! keycode 206 = NoSymbol
+! keycode 207 = NoSymbol
+
+
+! make physical Alt_R key to act like Super_R
+keycode 108 = Super_R
+
+! add Super_R to mod4
+add mod4 =  Super_R
+
+! swap Alt_L and Win_L physical keys
+keycode 133 = Alt_L
+keycode 64 = Meta_L 	 
+
+! -------------------------
+
+! make Alt_L (physical Win_L) the Alt mod
+add mod1 = Alt_L
+! make Win_L (physical Alt_L) the Super mod
+add mod4 = Meta_L
+```
+
+
+Result
+```
+[aliok@localhost ~]$ xmodmap
+xmodmap:  up to 4 keys per modifier, (keycodes in parentheses):
 
 shift       Shift_L (0x32),  Shift_R (0x3e)
 lock        Caps_Lock (0x42)
 control     Control_L (0x25),  Control_R (0x69)
 mod1        Alt_L (0x85),  Alt_L (0xcc)
 mod2        Num_Lock (0x4d)
-mod3
-mod4        Meta_L (0x40),  Super_R (0x6c),  Super_R (0x86),  Meta_L (0xcd),  Hyper_L (0xcf)
+mod3      
+mod4        Meta_L (0x40),  Super_R (0x6c),  Super_R (0x86),  Meta_L (0xcd)
 mod5        ISO_Level3_Shift (0x5c),  Mode_switch (0xcb)
+```
+
+and
+
+```
+[aliok@localhost ~]$ xmodmap -pke
+keycode   8 =
+keycode   9 = Escape NoSymbol Escape
+keycode  10 = 1 exclam 1 exclam
+keycode  11 = 2 at 2 at
+keycode  12 = 3 numbersign 3 numbersign
+keycode  13 = 4 dollar 4 dollar
+keycode  14 = 5 percent 5 percent
+keycode  15 = 6 asciicircum 6 asciicircum
+keycode  16 = 7 ampersand 7 ampersand
+keycode  17 = 8 asterisk 8 asterisk
+keycode  18 = 9 parenleft 9 parenleft
+keycode  19 = 0 parenright 0 parenright
+keycode  20 = minus underscore minus underscore
+keycode  21 = equal plus equal plus
+keycode  22 = BackSpace BackSpace BackSpace BackSpace
+keycode  23 = Tab ISO_Left_Tab Tab ISO_Left_Tab
+keycode  24 = q Q q Q
+keycode  25 = w W w W
+keycode  26 = e E e E
+keycode  27 = r R r R
+keycode  28 = t T t T
+keycode  29 = y Y y Y
+keycode  30 = u U u U
+keycode  31 = i I i I
+keycode  32 = o O o O
+keycode  33 = p P p P
+keycode  34 = bracketleft braceleft bracketleft braceleft
+keycode  35 = bracketright braceright bracketright braceright
+keycode  36 = Return NoSymbol Return
+keycode  37 = Control_L NoSymbol Control_L
+keycode  38 = a A a A
+keycode  39 = s S s S
+keycode  40 = d D d D
+keycode  41 = f F f F
+keycode  42 = g G g G
+keycode  43 = h H h H
+keycode  44 = j J j J
+keycode  45 = k K k K
+keycode  46 = l L l L
+keycode  47 = semicolon colon semicolon colon
+keycode  48 = apostrophe quotedbl apostrophe quotedbl
+keycode  49 = grave asciitilde grave asciitilde
+keycode  50 = Shift_L NoSymbol Shift_L
+keycode  51 = backslash bar backslash bar
+keycode  52 = z Z z Z
+keycode  53 = x X x X
+keycode  54 = c C c C
+keycode  55 = v V v V
+keycode  56 = b B b B
+keycode  57 = n N n N
+keycode  58 = m M m M
+keycode  59 = comma less comma less
+keycode  60 = period greater period greater
+keycode  61 = slash question slash question
+keycode  62 = Shift_R NoSymbol Shift_R
+keycode  63 = KP_Multiply KP_Multiply KP_Multiply KP_Multiply KP_Multiply KP_Multiply XF86ClearGrab
+keycode  64 = Meta_L NoSymbol Meta_L
+keycode  65 = space NoSymbol space
+keycode  66 = Caps_Lock NoSymbol Caps_Lock
+keycode  67 = F1 F1 F1 F1 F1 F1 XF86Switch_VT_1
+keycode  68 = F2 F2 F2 F2 F2 F2 XF86Switch_VT_2
+keycode  69 = F3 F3 F3 F3 F3 F3 XF86Switch_VT_3
+keycode  70 = F4 F4 F4 F4 F4 F4 XF86Switch_VT_4
+keycode  71 = F5 F5 F5 F5 F5 F5 XF86Switch_VT_5
+keycode  72 = F6 F6 F6 F6 F6 F6 XF86Switch_VT_6
+keycode  73 = F7 F7 F7 F7 F7 F7 XF86Switch_VT_7
+keycode  74 = F8 F8 F8 F8 F8 F8 XF86Switch_VT_8
+keycode  75 = F9 F9 F9 F9 F9 F9 XF86Switch_VT_9
+keycode  76 = F10 F10 F10 F10 F10 F10 XF86Switch_VT_10
+keycode  77 = Num_Lock NoSymbol Num_Lock
+keycode  78 = Scroll_Lock NoSymbol Scroll_Lock
+keycode  79 = KP_Home KP_7 KP_Home KP_7
+keycode  80 = KP_Up KP_8 KP_Up KP_8
+keycode  81 = KP_Prior KP_9 KP_Prior KP_9
+keycode  82 = KP_Subtract KP_Subtract KP_Subtract KP_Subtract KP_Subtract KP_Subtract XF86Prev_VMode
+keycode  83 = KP_Left KP_4 KP_Left KP_4
+keycode  84 = KP_Begin KP_5 KP_Begin KP_5
+keycode  85 = KP_Right KP_6 KP_Right KP_6
+keycode  86 = KP_Add KP_Add KP_Add KP_Add KP_Add KP_Add XF86Next_VMode
+keycode  87 = KP_End KP_1 KP_End KP_1
+keycode  88 = KP_Down KP_2 KP_Down KP_2
+keycode  89 = KP_Next KP_3 KP_Next KP_3
+keycode  90 = KP_Insert KP_0 KP_Insert KP_0
+keycode  91 = KP_Delete KP_Decimal KP_Delete KP_Decimal
+keycode  92 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
+keycode  93 =
+keycode  94 = less greater less greater bar brokenbar bar
+keycode  95 = F11 F11 F11 F11 F11 F11 XF86Switch_VT_11
+keycode  96 = F12 F12 F12 F12 F12 F12 XF86Switch_VT_12
+keycode  97 =
+keycode  98 = Katakana NoSymbol Katakana
+keycode  99 = Hiragana NoSymbol Hiragana
+keycode 100 = Henkan_Mode NoSymbol Henkan_Mode
+keycode 101 = Hiragana_Katakana NoSymbol Hiragana_Katakana
+keycode 102 = Muhenkan NoSymbol Muhenkan
+keycode 103 =
+keycode 104 = KP_Enter NoSymbol KP_Enter
+keycode 105 = Control_R NoSymbol Control_R
+keycode 106 = KP_Divide KP_Divide KP_Divide KP_Divide KP_Divide KP_Divide XF86Ungrab
+keycode 107 = Print Sys_Req Print Sys_Req
+keycode 108 = Super_R NoSymbol Super_R
+keycode 109 = Linefeed NoSymbol Linefeed
+keycode 110 = Home NoSymbol Home
+keycode 111 = Up NoSymbol Up
+keycode 112 = Prior NoSymbol Prior
+keycode 113 = Left NoSymbol Left
+keycode 114 = Right NoSymbol Right
+keycode 115 = End NoSymbol End
+keycode 116 = Down NoSymbol Down
+keycode 117 = Next NoSymbol Next
+keycode 118 = Insert NoSymbol Insert
+keycode 119 = Delete NoSymbol Delete
+keycode 120 =
+keycode 121 = XF86AudioMute NoSymbol XF86AudioMute
+keycode 122 = XF86AudioLowerVolume NoSymbol XF86AudioLowerVolume
+keycode 123 = XF86AudioRaiseVolume NoSymbol XF86AudioRaiseVolume
+keycode 124 = XF86PowerOff NoSymbol XF86PowerOff
+keycode 125 = KP_Equal NoSymbol KP_Equal
+keycode 126 = plusminus NoSymbol plusminus
+keycode 127 = Pause Break Pause Break
+keycode 128 = XF86LaunchA NoSymbol XF86LaunchA
+keycode 129 = KP_Decimal KP_Decimal KP_Decimal KP_Decimal
+keycode 130 = Hangul NoSymbol Hangul
+keycode 131 = Hangul_Hanja NoSymbol Hangul_Hanja
+keycode 132 =
+keycode 133 = Alt_L NoSymbol Alt_L
+keycode 134 = Super_R NoSymbol Super_R
+keycode 135 = Menu NoSymbol Menu
+keycode 136 = Cancel NoSymbol Cancel
+keycode 137 = Redo NoSymbol Redo
+keycode 138 = SunProps NoSymbol SunProps
+keycode 139 = Undo NoSymbol Undo
+keycode 140 = SunFront NoSymbol SunFront
+keycode 141 = XF86Copy NoSymbol XF86Copy
+keycode 142 = XF86Open NoSymbol XF86Open
+keycode 143 = XF86Paste NoSymbol XF86Paste
+keycode 144 = Find NoSymbol Find
+keycode 145 = XF86Cut NoSymbol XF86Cut
+keycode 146 = Help NoSymbol Help
+keycode 147 = XF86MenuKB NoSymbol XF86MenuKB
+keycode 148 = XF86Calculator NoSymbol XF86Calculator
+keycode 149 =
+keycode 150 = XF86Sleep NoSymbol XF86Sleep
+keycode 151 = XF86WakeUp NoSymbol XF86WakeUp
+keycode 152 = XF86Explorer NoSymbol XF86Explorer
+keycode 153 = XF86Send NoSymbol XF86Send
+keycode 154 =
+keycode 155 = XF86Xfer NoSymbol XF86Xfer
+keycode 156 = XF86Launch1 NoSymbol XF86Launch1
+keycode 157 = XF86Launch2 NoSymbol XF86Launch2
+keycode 158 = XF86WWW NoSymbol XF86WWW
+keycode 159 = XF86DOS NoSymbol XF86DOS
+keycode 160 = XF86ScreenSaver NoSymbol XF86ScreenSaver
+keycode 161 = XF86RotateWindows NoSymbol XF86RotateWindows
+keycode 162 = XF86TaskPane NoSymbol XF86TaskPane
+keycode 163 = XF86Mail NoSymbol XF86Mail
+keycode 164 = XF86Favorites NoSymbol XF86Favorites
+keycode 165 = XF86MyComputer NoSymbol XF86MyComputer
+keycode 166 = XF86Back NoSymbol XF86Back
+keycode 167 = XF86Forward NoSymbol XF86Forward
+keycode 168 =
+keycode 169 = XF86Eject NoSymbol XF86Eject
+keycode 170 = XF86Eject XF86Eject XF86Eject XF86Eject
+keycode 171 = XF86AudioNext NoSymbol XF86AudioNext
+keycode 172 = XF86AudioPlay XF86AudioPause XF86AudioPlay XF86AudioPause
+keycode 173 = XF86AudioPrev NoSymbol XF86AudioPrev
+keycode 174 = XF86AudioStop XF86Eject XF86AudioStop XF86Eject
+keycode 175 = XF86AudioRecord NoSymbol XF86AudioRecord
+keycode 176 = XF86AudioRewind NoSymbol XF86AudioRewind
+keycode 177 = XF86Phone NoSymbol XF86Phone
+keycode 178 =
+keycode 179 = XF86Tools NoSymbol XF86Tools
+keycode 180 = XF86HomePage NoSymbol XF86HomePage
+keycode 181 = XF86Reload NoSymbol XF86Reload
+keycode 182 = XF86Close NoSymbol XF86Close
+keycode 183 =
+keycode 184 =
+keycode 185 = XF86ScrollUp NoSymbol XF86ScrollUp
+keycode 186 = XF86ScrollDown NoSymbol XF86ScrollDown
+keycode 187 = parenleft NoSymbol parenleft
+keycode 188 = parenright NoSymbol parenright
+keycode 189 = XF86New NoSymbol XF86New
+keycode 190 = Redo NoSymbol Redo
+keycode 191 = XF86Tools NoSymbol XF86Tools
+keycode 192 = XF86Launch5 NoSymbol XF86Launch5
+keycode 193 = XF86Launch6 NoSymbol XF86Launch6
+keycode 194 = XF86Launch7 NoSymbol XF86Launch7
+keycode 195 = XF86Launch8 NoSymbol XF86Launch8
+keycode 196 = XF86Launch9 NoSymbol XF86Launch9
+keycode 197 =
+keycode 198 = XF86AudioMicMute NoSymbol XF86AudioMicMute
+keycode 199 = XF86TouchpadToggle NoSymbol XF86TouchpadToggle
+keycode 200 = XF86TouchpadOn NoSymbol XF86TouchpadOn
+keycode 201 = XF86TouchpadOff NoSymbol XF86TouchpadOff
+keycode 202 =
+keycode 203 = Mode_switch NoSymbol Mode_switch
+keycode 204 = NoSymbol Alt_L NoSymbol Alt_L
+keycode 205 = NoSymbol Meta_L NoSymbol Meta_L
+keycode 206 = NoSymbol Super_L NoSymbol Super_L
+keycode 207 = NoSymbol Hyper_L NoSymbol Hyper_L
+keycode 208 = XF86AudioPlay NoSymbol XF86AudioPlay
+keycode 209 = XF86AudioPause NoSymbol XF86AudioPause
+keycode 210 = XF86Launch3 NoSymbol XF86Launch3
+keycode 211 = XF86Launch4 NoSymbol XF86Launch4
+keycode 212 = XF86LaunchB NoSymbol XF86LaunchB
+keycode 213 = XF86Suspend NoSymbol XF86Suspend
+keycode 214 = XF86Close NoSymbol XF86Close
+keycode 215 = XF86AudioPlay NoSymbol XF86AudioPlay
+keycode 216 = XF86AudioForward NoSymbol XF86AudioForward
+keycode 217 =
+keycode 218 = Print NoSymbol Print
+keycode 219 =
+keycode 220 = XF86WebCam NoSymbol XF86WebCam
+keycode 221 = XF86AudioPreset NoSymbol XF86AudioPreset
+keycode 222 =
+keycode 223 = XF86Mail NoSymbol XF86Mail
+keycode 224 = XF86Messenger NoSymbol XF86Messenger
+keycode 225 = XF86Search NoSymbol XF86Search
+keycode 226 = XF86Go NoSymbol XF86Go
+keycode 227 = XF86Finance NoSymbol XF86Finance
+keycode 228 = XF86Game NoSymbol XF86Game
+keycode 229 = XF86Shop NoSymbol XF86Shop
+keycode 230 =
+keycode 231 = Cancel NoSymbol Cancel
+keycode 232 = XF86MonBrightnessDown NoSymbol XF86MonBrightnessDown
+keycode 233 = XF86MonBrightnessUp NoSymbol XF86MonBrightnessUp
+keycode 234 = XF86AudioMedia NoSymbol XF86AudioMedia
+keycode 235 = XF86Display NoSymbol XF86Display
+keycode 236 = XF86KbdLightOnOff NoSymbol XF86KbdLightOnOff
+keycode 237 = XF86KbdBrightnessDown NoSymbol XF86KbdBrightnessDown
+keycode 238 = XF86KbdBrightnessUp NoSymbol XF86KbdBrightnessUp
+keycode 239 = XF86Send NoSymbol XF86Send
+keycode 240 = XF86Reply NoSymbol XF86Reply
+keycode 241 = XF86MailForward NoSymbol XF86MailForward
+keycode 242 = XF86Save NoSymbol XF86Save
+keycode 243 = XF86Documents NoSymbol XF86Documents
+keycode 244 = XF86Battery NoSymbol XF86Battery
+keycode 245 = XF86Bluetooth NoSymbol XF86Bluetooth
+keycode 246 = XF86WLAN NoSymbol XF86WLAN
+keycode 247 = XF86UWB NoSymbol XF86UWB
+keycode 248 =
+keycode 249 =
+keycode 250 =
+keycode 251 =
+keycode 252 =
+keycode 253 =
+keycode 254 = XF86WWAN NoSymbol XF86WWAN
+keycode 255 = XF86RFKill NoSymbol XF86RFKill
 ```
 
 Use `xev` to learn about codes for physical keys.
@@ -115,13 +963,20 @@ I couldn't make this setting work on startup. No matter what I tried
 * .xsessionrc
 * /etc/X11/Xsession.d/80_xmodmap
 
-So, I created this bash script on the desktop to click once manually:
+So, I created these bash script on the desktop to click once manually:
 
 ```
-xmodmap ~/.Xmodmap
+echo "xmodmap ~/.Xmodmap_appleKeyboard"  > ~/Desktop/xmodMapAppleKeyboard.sh
+echo "xmodmap ~/.Xmodmap_laptopKeyboard" > ~/Desktop/xmodMapLaptopKeyboard.sh
+
+chmod +x ~/Desktop/xmodMapAppleKeyboard.sh
+chmod +x ~/Desktop/xmodMapLaptopKeyboard.sh
 ```
+
 
 **Disable super key for other shortcuts**
+
+NOTE: you can compare the dconf dump, which is described later.
 
 Go to "Tweaks" tool and then go to "Keyboard and Mouse". Set "Switch between overview and desktop" to right super.
 
@@ -166,10 +1021,41 @@ move-to-monitor-up=['']
 
 Use `dconf-editor` to compare and adjust.
 
+#### Apple Keyboard fn-key fix
 
+See:
+- https://www.dalemacartney.com/2013/06/14/changing-the-default-function-key-behaviour-in-fedora/
+- https://superuser.com/questions/79822/how-to-swap-the-fn-use-of-function-keys-on-an-apple-keyboard-in-linux
 
+Doing `echo 2 > /sys/module/hid_apple/parameters/fnmode` with sudo would work.
+
+However, to persist the setting, let's create a service that is enabled upon boot.
+
+Create `/etc/systemd/system/apple-keyboard.service` with this content:
+
+```
+[root@localhost system]# cat /etc/systemd/system/apple-keyboard.service 
+[Unit]
+ Description=apple-keyboard
+[Service]
+ Type=oneshot
+ ExecStart=/bin/sh -c "echo 2 > /sys/module/hid_apple/parameters/fnmode"
+ ExecStop=/bin/sh -c "echo 1 > /sys/module/hid_apple/parameters/fnmode"
+ RemainAfterExit=yes
+[Install]
+ WantedBy=multi-user.target
+[root@localhost system]# 
+```
+
+Enable it:
+```
+chcon -t systemd_unit_file_t  /etc/systemd/system/apple-keyboard.service
+systemctl daemon-reload
+```
 
 ### Keyboard type fast
+
+NOTE: you can compare the dconf dump, which is described later.
 
 See https://askubuntu.com/questions/140255/how-to-override-the-new-limited-keyboard-repeat-rate-limit
 
@@ -190,6 +1076,8 @@ gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 11
 ```
 
 ### Don't disable touchpad while writing
+
+NOTE: you can compare the dconf dump, which is described later.
 
 https://ask.fedoraproject.org/en/question/66444/disable-touchpad-while-typing-on-gnome-fedora-22/
 
@@ -215,6 +1103,8 @@ dconf write /org/gnome/desktop/peripherals/touchpad/disable-while-typing false
 
 ### See files and folders on Desktop
 
+NOTE: you can compare the dconf dump, which is described later.
+
 https://ask.fedoraproject.org/en/question/55652/how-to-see-desktop-files-and-folders/
 
 ### Install an old version of a package
@@ -233,95 +1123,11 @@ e.g.
 
 ### Shell extensions
 
+NOTE: you can compare the dconf dump, which is described later.
+
+Check out the `/org/gnome/shell/extensions/` section of the dump.
+
 https://extensions.gnome.org/local/
-
-```
-[aliok@localhost ~]$ dconf dump /org/gnome/shell/extensions/
-[extra-panels]
-available-list=['places-menu', 'apps-menu', 'system-monitor', 'clipboardIndicator', 'servicesManager']
-
-[clipboard-indicator]
-display-mode=0
-enable-keybindings=false
-history-size=30
-notify-on-copy=false
-
-[services]
-show-restart=true
-position='panel'
-systemd=['{"name":"Docker","service":"docker.service","type":"system"}', '{"name":"Redis","service":"redis.service","type":"system"}']
-show-add=true
-
-[KeepAwake@jepfa.de]
-idle-activation-enabled=false
-idle-dim=false
-idle-delay=0
-sleep-inactive-battery-type='nothing'
-sleep-inactive-ac-type='nothing'
-restore-state=false
-
-[system-monitor]
-battery-show-text=false
-cpu-refresh-time=3500
-fan-sensor-file='/sys/class/hwmon/hwmon2/device/fan1_input'
-compact-display=true
-memory-show-menu=true
-net-display=false
-memory-graph-width=50
-memory-style='digit'
-battery-show-menu=true
-battery-time=true
-battery-display=true
-cpu-style='both'
-cpu-graph-width=50
-cpu-show-text=false
-
-[no-title-bar]
-only-main-monitor=true
-change-appmenu=true
-button-position='within-status-area'
-hide-buttons=true
-
-[app-keys]
-use-nw=false
-use-kp-keys=false
-close-overview=false
-cycle-windows=false
-use-num-keys=false
-cycle-windows-active=false
-use-kp-nw=false
-
-[extendedgestures]
-horizontal-three-swipes=false
-vertical-three-action='switch-workspace'
-horizontal-three-action='switch-workspace'
-vertical-three-swipes=true
-
-[window-list]
-show-on-all-monitors=false
-
-[workspace-grid]
-relative-workspace-switching=false
-num-rows=1
-num-columns=5
-wrap-to-same=true
-
-[dash-to-dock]
-force-straight-corner=true
-intellihide-mode='FOCUS_APPLICATION_WINDOWS'
-hot-keys=false
-custom-background-color=true
-apply-custom-theme=false
-custom-theme-running-dots=true
-unity-backlit-items=false
-dock-position='BOTTOM'
-custom-theme-shrink=true
-background-opacity=0.35999999999999999
-height-fraction=0.90000000000000002
-opaque-background=true
-background-color='#babdb6'
-preferred-monitor=0
-```
 
 List
 * https://extensions.gnome.org/extension/6/applications-menu/
@@ -338,3 +1144,322 @@ List
 * https://extensions.gnome.org/extension/906/sound-output-device-chooser/
 * https://extensions.gnome.org/extension/120/system-monitor/
 * https://extensions.gnome.org/extension/484/workspace-grid/
+
+
+### DCONF
+
+DCONF is the place where Gnome settings are stored.
+
+Command to get the dump:
+```
+dconf dump / > ~/Desktop/dconf.dump.txt
+```
+
+
+Here is the latest dump:
+```
+[org/gnome/settings-daemon/plugins/power]
+idle-dim=true
+sleep-inactive-battery-type='nothing'
+sleep-inactive-ac-timeout=3600
+sleep-inactive-ac-type='nothing'
+sleep-inactive-battery-timeout=1800
+
+[org/gnome/settings-daemon/plugins/color]
+night-light-schedule-automatic=true
+night-light-enabled=false
+
+[org/gnome/settings-daemon/plugins/xsettings]
+antialiasing='grayscale'
+hinting='slight'
+
+[org/gnome/settings-daemon/peripherals/keyboard]
+numlock-state='on'
+
+[org/gnome/shell]
+enabled-extensions=['background-logo@fedorahosted.org', 'apps-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com', 'battery-percentage@mubaris.github.io', 'services-systemd@abteil.org', 'no-title-bar@franglais125.gmail.com', 'KeepAwake@jepfa.de', 'dash-to-dock@micxgx.gmail.com', 'system-monitor@paradoxxx.zero.gmail.com', 'nohotcorner@azuri.free.fr', 'clipboard-indicator@tudmotu.com', 'sound-output-device-chooser@kgshank.net', 'workspace-grid@mathematical.coffee.gmail.com', 'nvidiatemp@baco']
+disable-user-extensions=false
+favorite-apps=['google-chrome.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Software.desktop', 'gnome-control-center.desktop', 'gnome-tweak-tool.desktop', 'org.gnome.gedit.desktop']
+
+[org/gnome/shell/extensions/services]
+show-restart=true
+position='panel'
+systemd=['{"name":"docker","service":"docker.service","type":"system"}']
+show-add=true
+
+[org/gnome/shell/extensions/system-monitor]
+center-display=false
+fan-sensor-file='/sys/class/hwmon/hwmon3/device/fan1_input'
+show-tooltip=false
+compact-display=false
+memory-show-menu=true
+net-display=false
+battery-style='digit'
+swap-display=false
+memory-style='digit'
+battery-show-menu=false
+memory-show-text=true
+cpu-style='both'
+battery-display=false
+cpu-display=true
+cpu-graph-width=50
+memory-display=true
+
+[org/gnome/shell/extensions/dash-to-dock]
+preferred-monitor=0
+force-straight-corner=false
+intellihide-mode='FOCUS_APPLICATION_WINDOWS'
+show-show-apps-button=true
+hot-keys=false
+multi-monitor=true
+custom-background-color=false
+apply-custom-theme=false
+custom-theme-running-dots=true
+unity-backlit-items=false
+dock-position='BOTTOM'
+custom-theme-shrink=true
+background-opacity=0.5
+height-fraction=0.90000000000000002
+dash-max-icon-size=48
+opaque-background=true
+icon-size-fixed=false
+
+[org/gnome/shell/extensions/workspace-grid]
+num-rows=1
+num-columns=6
+
+[org/gnome/shell/extensions/KeepAwake@jepfa.de]
+idle-activation-enabled=false
+idle-dim=false
+idle-delay=0
+sleep-inactive-battery-type='nothing'
+sleep-inactive-ac-type='nothing'
+restore-state=false
+
+[org/gnome/shell/extensions/clipboard-indicator]
+cache-disable=true
+enable-keybindings=false
+cache-size=1009
+
+[org/gnome/shell/overrides]
+dynamic-workspaces=false
+workspaces-only-on-primary=false
+
+[org/gnome/shell/keybindings]
+toggle-message-tray=@as []
+open-application-menu=@as []
+toggle-application-view=@as []
+toggle-overview=@as []
+focus-active-notification=@as []
+
+[org/gnome/gedit/preferences/ui]
+show-tabs-mode='auto'
+side-panel-visible=false
+
+[org/gnome/gedit/plugins/filebrowser]
+virtual-root='file:///home/aliok/Desktop'
+tree-view=true
+root='file:///'
+
+[org/gnome/gedit/plugins]
+active-plugins=['time', 'filebrowser', 'docinfo', 'spell', 'modelines']
+
+[org/gnome/gedit/state/history-entry]
+search-for-entry=['/Users/ali/.ssh/id_rsa']
+replace-with-entry=['/home/aliok/.ssh/id_rsa']
+
+[org/gnome/gedit/state/window]
+size=(1448, 898)
+state=87168
+bottom-panel-size=140
+side-panel-size=200
+side-panel-active-page='GeditWindowDocumentsPanel'
+
+[org/gnome/nautilus/preferences]
+executable-text-activation='ask'
+default-folder-viewer='icon-view'
+search-filter-time-type='last_modified'
+
+[org/gnome/nautilus/window-state]
+sidebar-width=190
+geometry='890x540+401+186'
+maximized=false
+
+[org/gnome/nautilus/desktop]
+network-icon-visible=false
+
+[org/gnome/nautilus/list-view]
+default-visible-columns=['name', 'size', 'date_modified']
+default-column-order=['name', 'size', 'type', 'owner', 'group', 'permissions', 'mime_type', 'where', 'date_modified', 'date_modified_with_time', 'date_accessed', 'recency']
+
+[org/gnome/system/location]
+enabled=false
+
+[org/gnome/evolution-data-server]
+network-monitor-gio-name=''
+migrated=true
+
+[org/gnome/desktop/interface]
+text-scaling-factor=1.25
+gtk-im-module='gtk-im-context-simple'
+toolkit-accessibility=false
+
+[org/gnome/desktop/notifications]
+application-children=['org-gnome-software', 'gnome-tweak-tool', 'abrt-applet', 'org-gnome-terminal', 'ca-desrt-dconf-editor']
+
+[org/gnome/desktop/notifications/application/gnome-tweak-tool]
+application-id='gnome-tweak-tool.desktop'
+
+[org/gnome/desktop/notifications/application/org-gnome-terminal]
+application-id='org.gnome.Terminal.desktop'
+
+[org/gnome/desktop/notifications/application/ca-desrt-dconf-editor]
+application-id='ca.desrt.dconf-editor.desktop'
+
+[org/gnome/desktop/notifications/application/abrt-applet]
+application-id='abrt-applet.desktop'
+
+[org/gnome/desktop/notifications/application/org-gnome-software]
+application-id='org.gnome.Software.desktop'
+
+[org/gnome/desktop/app-folders]
+folder-children=['Utilities', 'Sundry', 'YaST']
+
+[org/gnome/desktop/app-folders/folders/Utilities]
+translate=true
+categories=['X-GNOME-Utilities']
+apps=['org.gnome.baobab.desktop', 'deja-dup-preferences.desktop', 'eog.desktop', 'evince.desktop', 'org.gnome.FileRoller.desktop', 'gnome-calculator.desktop', 'gnome-dictionary.desktop', 'org.gnome.Characters.desktop', 'org.gnome.DiskUtility.desktop', 'org.gnome.font-viewer.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Screenshot.desktop', 'gnome-system-log.desktop', 'gnome-system-monitor.desktop', 'gnome-tweak-tool.desktop', 'gucharmap.desktop', 'seahorse.desktop', 'vinagre.desktop', 'yelp.desktop']
+name='X-GNOME-Utilities.directory'
+
+[org/gnome/desktop/app-folders/folders/Sundry]
+translate=true
+categories=['X-GNOME-Sundry']
+apps=['alacarte.desktop', 'authconfig.desktop', 'ca.desrt.dconf-editor.desktop', 'fedora-release-notes.desktop', 'firewall-config.desktop', 'flash-player-properties.desktop', 'gconf-editor.desktop', 'gnome-abrt.desktop', 'gnome-power-statistics.desktop', 'ibus-setup-anthy.desktop', 'ibus-setup.desktop', 'ibus-setup-hangul.desktop', 'ibus-setup-libbopomofo.desktop', 'ibus-setup-libpinyin.desktop', 'ibus-setup-m17n.desktop', 'ibus-setup-typing-booster.desktop', 'im-chooser.desktop', 'itweb-settings.desktop', 'jhbuild.desktop', 'javaws.desktop', 'java-1.7.0-openjdk-jconsole.desktop', 'java-1.7.0-openjdk-policytool.desktop', 'log4j-chainsaw.desktop', 'log4j-logfactor5.desktop', 'nm-connection-editor.desktop', 'orca.desktop', 'setroubleshoot.desktop', 'system-config-date.desktop', 'system-config-firewall.desktop', 'system-config-keyboard.desktop', 'system-config-language.desktop', 'system-config-printer.desktop', 'system-config-users.desktop', 'vino-preferences.desktop']
+name='X-GNOME-Sundry.directory'
+
+[org/gnome/desktop/app-folders/folders/YaST]
+translate=true
+categories=['X-SuSE-YaST']
+name='suse-yast.directory'
+
+[org/gnome/desktop/screensaver]
+idle-activation-enabled=true
+
+[org/gnome/desktop/peripherals/touchpad]
+natural-scroll=false
+disable-while-typing=false
+tap-to-click=true
+
+[org/gnome/desktop/peripherals/keyboard]
+repeat-interval=uint32 11
+delay=uint32 150
+
+[org/gnome/desktop/peripherals/mouse]
+natural-scroll=false
+speed=-0.61764705882352944
+
+[org/gnome/desktop/search-providers]
+sort-order=['org.gnome.Contacts.desktop', 'org.gnome.Documents.desktop', 'org.gnome.Nautilus.desktop']
+disabled=['org.gnome.Contacts.desktop', 'org.gnome.Calendar.desktop']
+
+[org/gnome/desktop/session]
+idle-delay=uint32 300
+
+[org/gnome/desktop/privacy]
+report-technical-problems=false
+
+[org/gnome/desktop/wm/preferences]
+mouse-button-modifier='<Super>'
+num-workspaces=6
+
+[org/gnome/desktop/wm/keybindings]
+switch-to-workspace-left=['<Shift><Alt><Super>F8']
+move-to-workspace-left=@as []
+begin-move=@as []
+move-to-monitor-right=@as []
+switch-to-workspace-1=@as []
+move-to-monitor-left=@as []
+panel-run-dialog=@as []
+toggle-maximized=@as []
+cycle-windows=@as []
+unmaximize=@as []
+maximize=@as []
+begin-resize=@as []
+panel-main-menu=@as []
+cycle-windows-backward=@as []
+cycle-group-backward=@as []
+cycle-panels-backward=@as []
+switch-input-source=@as []
+switch-to-workspace-right=['<Shift><Alt><Super>F9']
+switch-to-workspace-down=@as []
+move-to-workspace-1=@as []
+cycle-group=@as []
+move-to-workspace-last=@as []
+switch-to-workspace-last=@as []
+minimize=@as []
+move-to-workspace-down=@as []
+move-to-monitor-down=@as []
+switch-group=@as []
+activate-window-menu=@as []
+cycle-panels=@as []
+move-to-workspace-up=@as []
+move-to-workspace-right=@as []
+switch-group-backward=@as []
+switch-input-source-backward=@as []
+move-to-monitor-up=@as []
+switch-to-workspace-up=@as []
+
+[org/gnome/desktop/a11y/applications]
+screen-reader-enabled=false
+
+[org/gnome/desktop/background]
+show-desktop-icons=true
+
+[org/gnome/desktop/input-sources]
+current=uint32 0
+sources=[('xkb', 'us')]
+xkb-options=@as []
+
+[org/gnome/terminal/legacy]
+schema-version=uint32 3
+
+[org/gnome/software]
+first-run=false
+check-timestamp=int64 1516315795
+
+[org/gnome/mutter]
+overlay-key='Super_R'
+
+[org/gnome/gnome-system-monitor]
+show-dependencies=false
+cpu-colors=[(uint32 0, '#FF6E00'), (1, '#CB0C29'), (2, '#49A835'), (3, '#2D7DB3'), (4, '#f25915e815e8'), (5, '#f25915e815e8'), (6, '#f25915e815e8'), (7, '#f25915e815e8')]
+show-whose-processes='user'
+
+[org/gnome/gnome-system-monitor/disktreenew]
+col-6-visible=true
+col-6-width=0
+
+[org/gnome/gnome-system-monitor/proctree]
+columns-order=[0, 1, 2, 3, 4, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+sort-order=1
+sort-col=8
+
+[org/gtk/settings/file-chooser]
+sort-column='name'
+sidebar-width=190
+window-position=(0, 34)
+show-size-column=true
+show-hidden=true
+window-size=(1863, 1435)
+sort-directories-first=true
+date-format='regular'
+sort-order='ascending'
+location-mode='path-bar'
+
+[ca/desrt/dconf-editor]
+saved-view='/org/gnome/shell/keybindings/'
+show-warning=false
+window-height=600
+window-width=800
+window-is-maximized=false
+```
