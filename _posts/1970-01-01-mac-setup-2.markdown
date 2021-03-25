@@ -17,7 +17,14 @@ Finder and UI
 
 * Show hidden files in Finder
 * Show full path in Finder
+* Expand save panel by default
+* Expand print panel by default
+* Save to disk (not to iCloud) by default
+* Automatically quit printer app once the print jobs complete
 
+Others:
+# Increase sound quality for Bluetooth headphones/headsets
+defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
 
 Packages
 ---------------------------------------------------------------------------------------
@@ -26,7 +33,7 @@ Packages
 * Install Cask.
 * Install latest bash and make it the system default
 * Install/upgrade GNU utils
-*  
+* iterm + oh-my-zsh + powerlevel10k: https://gist.github.com/kevin-smets/8568070
 
 Dotfiles
 ---------------------------------------------------------------------------------------
@@ -51,7 +58,7 @@ Run following and restart the apps.
 Custom layout:
 
 * Get the file: `MyBritish5.keylayout`
-* Copy it into `/Library/Keyboard Layouts/`
+* Install it to system using Ukelele
 * Add the custom layout from OsX Preferences->Keyboard.
 * Remove other keyboards
 * Set custom layout as the default one.
