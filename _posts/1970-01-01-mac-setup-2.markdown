@@ -1,0 +1,58 @@
+---
+layout: post
+title:  "Mac Setup 2"
+date:   2021-03-25 20:59:15
+categories: private
+---
+
+Security
+---------------------------------------------------------------------------------------
+
+* Set up firmware password
+* Change root password
+* Enable FileVault
+
+Finder and UI
+---------------------------------------------------------------------------------------
+
+* Show hidden files in Finder
+* Show full path in Finder
+
+
+Packages
+---------------------------------------------------------------------------------------
+
+* Install Homebrew package manager.
+* Install Cask.
+* Install latest bash and make it the system default
+* Install/upgrade GNU utils
+*  
+
+Dotfiles
+---------------------------------------------------------------------------------------
+
+Checkout the dot files
+
+
+Keyboard
+---------------------------------------------------------------------------------------
+
+* Make it fast: http://apple.stackexchange.com/questions/10467/how-to-increase-keyboard-key-repeat-rate-on-os-x
+
+    defaults write -g InitialKeyRepeat -int 10
+    defaults write -g KeyRepeat -int 0
+    
+* Get rid of accent menu (shown when a key is held) . See <http://osxdaily.com/2011/08/04/enable-key-repeat-mac-os-x-lion/> .
+
+Run following and restart the apps.
+
+    defaults write -g ApplePressAndHoldEnabled -bool false
+ 
+Custom layout:
+
+* Get the file: `MyBritish5.keylayout`
+* Copy it into `/Library/Keyboard Layouts/`
+* Add the custom layout from OsX Preferences->Keyboard.
+* Remove other keyboards
+* Set custom layout as the default one.
+* In El Capitan, it was also the default language in login screen
